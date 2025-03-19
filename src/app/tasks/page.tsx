@@ -1,4 +1,3 @@
-import { fetchTodoGroups } from "@/lib/data"
 import TodoGroupList from "@/components/todo-group/list"
 import { Metadata } from "next"
 
