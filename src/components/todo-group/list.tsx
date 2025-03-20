@@ -1,5 +1,4 @@
 import { fetchTodoGroups } from "@/lib/data"
-import NewTodoGroup from "./new"
 import TodoGroupItem from "./item"
 
 export default async function TodoGroupList() {
@@ -9,7 +8,6 @@ export default async function TodoGroupList() {
     <>
       {Array.isArray(todoGroups) ? (
         <div className="w-full space-y-4">
-          <NewTodoGroup />
           {todoGroups.length > 0 ? (
             <ul className="grid md:grid-cols-3 gap-4">
               {todoGroups.map((item) => (
@@ -17,11 +15,11 @@ export default async function TodoGroupList() {
               ))}
             </ul>
           ) : (
-            <p>You currently have no tasks, go on and create some!</p>
+            <p>You currently have no task groups, go on and create some!</p>
           )}
         </div>
       ) : (
-        todoGroups.message
+        <p>{todoGroups.message}</p>
       )}
     </>
   )

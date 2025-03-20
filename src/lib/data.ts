@@ -1,5 +1,5 @@
 import { sql } from "@vercel/postgres"
-import type { TodoGroup, TodoItem } from "./definitions"
+import type { TodoGroup, TodoGroupCounts, TodoItem } from "./definitions"
 import { auth } from "@/auth"
 import { UUID } from "crypto"
 import { z } from "zod"
@@ -43,11 +43,15 @@ export async function fetchTodoGroups() {
   const session = await auth()
 
   try {
-    const data = await sql<TodoGroup>`
-        SELECT *
-        FROM todo_group
-        WHERE customer_id = ${session?.user?.id}
-        ORDER BY name`
+    const data = await sql<TodoGroupCounts>`
+      SELECT tg.*, 
+       COUNT(ti.id) as total_count,
+       COUNT(CASE WHEN ti.completed THEN 1 END) as completed_count
+      FROM todo_group tg
+      LEFT JOIN todo_item ti ON tg.id = ti.todo_group_id
+      WHERE tg.customer_id = ${session?.user?.id}
+      GROUP BY tg.id
+      ORDER BY tg.name`
 
     return data.rows
   } catch (error) {
@@ -59,8 +63,6 @@ export async function fetchTodoGroups() {
 }
 
 export async function fetchTodoItems(todoGroupId: UUID) {
-  const session = await auth()
-
   const validatedId = zUUID.safeParse(todoGroupId)
 
   if (!validatedId.success) {
@@ -70,18 +72,6 @@ export async function fetchTodoItems(todoGroupId: UUID) {
   }
 
   try {
-    const { rowCount: todoGroupExists } = await sql<TodoGroup>`
-    SELECT *
-    FROM todo_group
-    WHERE id = ${todoGroupId}
-    AND customer_id = ${session?.user?.id}`
-
-    if (todoGroupExists === 0) {
-      return {
-        message: "The tasks you're trying to access do not exist!",
-      }
-    }
-
     const data = await sql<TodoItem>`
         SELECT *
         FROM todo_item

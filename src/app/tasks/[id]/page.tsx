@@ -1,4 +1,5 @@
 import TodoList from "@/components/todo/list"
+import NewTodo from "@/components/todo/new"
 import { fetchTodoGroupInfo } from "@/lib/data"
 import { UUID } from "crypto"
 
@@ -21,17 +22,22 @@ export default async function TodoGroupPage(props: {
 
   return (
     <>
-      {"id" in todoGroupData && (
-        <div>
+      {"id" in todoGroupData ? (
+        <div className="w-full space-y-4">
           <h1>{todoGroupData.name}</h1>
           {todoGroupData.description && (
             <p className="text-center text-sm text-muted-foreground">
               {todoGroupData.description}
             </p>
           )}
+          <NewTodo todoGroupId={id}></NewTodo>
+          <TodoList todoGroupId={id} />
         </div>
+      ) : (
+        <>
+          <p>{todoGroupData.message}</p>
+        </>
       )}
-      <TodoList todoGroupId={id} />
     </>
   )
 }

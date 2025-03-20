@@ -1,4 +1,5 @@
 import TodoGroupList from "@/components/todo-group/list"
+import NewTodoGroup from "@/components/todo-group/new"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
@@ -7,9 +8,10 @@ export const metadata: Metadata = {
 
 export default async function TasksPage() {
   return (
-    <>
+    <div className="w-full space-y-4">
       <h1>These are your task groups!</h1>
-      <TodoGroupList></TodoGroupList>
-    </>
+      <NewTodoGroup />
+      <TodoGroupList />
+    </div>
   )
 }

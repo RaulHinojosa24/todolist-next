@@ -7,6 +7,11 @@ export type TodoGroup = {
   customer_id: UUID
 }
 
+export type TodoGroupCounts = TodoGroup & {
+  completed_count: number
+  total_count: number
+}
+
 export type TodoItem = {
   id: UUID
   text: string

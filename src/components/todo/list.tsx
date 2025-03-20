@@ -1,8 +1,8 @@
 import { fetchTodoItems } from "@/lib/data"
 import TodoItem from "./item"
 import { UUID } from "crypto"
-import NewTodo from "./new"
-import { ClientToastTrigger } from "../ui/sonner"
+import { ClientToastTrigger } from "@/components/ui/sonner"
+import { Progress } from "@/components/ui/progress"
 
 export default async function TodoList({ todoGroupId }: { todoGroupId: UUID }) {
   const todoList = await fetchTodoItems(todoGroupId)
@@ -10,14 +10,31 @@ export default async function TodoList({ todoGroupId }: { todoGroupId: UUID }) {
   return (
     <>
       {Array.isArray(todoList) ? (
-        <div className="w-full space-y-4">
-          <NewTodo todoGroupId={todoGroupId} />
-          <ul>
-            {todoList.map((item) => (
-              <TodoItem key={item.id} item={item} />
-            ))}
-          </ul>
-        </div>
+        <>
+          {todoList.length > 0 ? (
+            <>
+              <ul className="w-full">
+                {todoList.map((item) => (
+                  <TodoItem key={item.id} item={item} />
+                ))}
+              </ul>
+              <Progress
+                value={
+                  (todoList.reduce(
+                    (acc, curr) => (acc += curr.completed ? 1 : 0),
+                    0
+                  ) *
+                    100) /
+                  todoList.length
+                }
+              />
+            </>
+          ) : (
+            <p className="text-center">
+              You currently have no tasks, go on and create some!
+            </p>
+          )}
+        </>
       ) : (
         <>
           <p>{todoList.message}</p>
