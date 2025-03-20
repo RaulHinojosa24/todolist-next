@@ -9,7 +9,7 @@ export default async function TodoGroupList() {
       {Array.isArray(todoGroups) ? (
         <div className="w-full space-y-4">
           {todoGroups.length > 0 ? (
-            <ul className="grid md:grid-cols-3 gap-4">
+            <ul className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
               {todoGroups.map((item) => (
                 <TodoGroupItem key={item.id} item={item} />
               ))}

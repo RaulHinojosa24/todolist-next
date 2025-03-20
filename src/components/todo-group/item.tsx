@@ -51,12 +51,12 @@ export default function TodoGroupItem({ item }: { item: TodoGroupCounts }) {
     <li>
       <Card className="h-full">
         <CardHeader className="h-full flex flex-col justify-between">
-          <div className="flex justify-between items-center gap-2">
+          <div className="flex justify-between items-start gap-2">
             <CardTitle>
               <Link href={`/tasks/${id}`}>
                 <Button
                   variant={"link"}
-                  className="text-start text-base p-0 text-wrap"
+                  className="text-start text-base p-0 whitespace-pre-wrap break-all min-h-9 h-auto"
                 >
                   {name}
                 </Button>
@@ -117,8 +117,10 @@ export default function TodoGroupItem({ item }: { item: TodoGroupCounts }) {
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
-          <CardDescription className="mt-2">
-            <p>{description || "No description"}</p>
+          <CardDescription>
+            <p className="break-all line-clamp-1">
+              {description || "No description"}
+            </p>
             {total_count > 0 ? (
               <p>
                 {completed_count} of {total_count} completed

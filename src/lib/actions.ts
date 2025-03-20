@@ -7,6 +7,11 @@ import { z } from "zod"
 import { auth, signIn } from "@/auth"
 import { AuthError } from "next-auth"
 import { TodoGroup } from "./definitions"
+import {
+  TODO_GROUP_DESCRIPTION_MAX_LENGTH,
+  TODO_GROUP_NAME_MAX_LENGTH,
+  TODO_ITEM_MAX_LENGTH,
+} from "./constants"
 
 export async function authenticate(
   prevState: string | undefined,
@@ -37,7 +42,7 @@ const TodoItemFormSchema = z.object({
     .min(1, {
       message: "Oops! Looks like you forgot to enter something.",
     })
-    .max(100, {
+    .max(TODO_ITEM_MAX_LENGTH, {
       message:
         "Oops! Your text is too long. Please keep it under 100 characters.",
     }),
@@ -180,11 +185,11 @@ const TodoGroupFormSchema = z.object({
     .min(1, {
       message: "Oops! Looks like you forgot to enter something.",
     })
-    .max(50, {
+    .max(TODO_GROUP_NAME_MAX_LENGTH, {
       message:
         "Oops! Group name is too long. Please keep it under 50 characters.",
     }),
-  description: z.string().trim().max(200, {
+  description: z.string().trim().max(TODO_GROUP_DESCRIPTION_MAX_LENGTH, {
     message:
       "Oops! Your description is too long. Please keep it under 200 characters.",
   }),
@@ -253,8 +258,6 @@ export async function editTodoGroup(
   prevState: TodoGroupState | undefined,
   formData: FormData
 ) {
-  console.log("EDITEDIT")
-
   const validatedFields = EditTodoGroup.safeParse({
     id: rawId,
     name: formData.get("name"),

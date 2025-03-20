@@ -7,6 +7,7 @@ import { TodoItem } from "@/lib/definitions"
 import { UUID } from "crypto"
 import { toast } from "sonner"
 import { Input } from "../ui/input"
+import { TODO_ITEM_MAX_LENGTH } from "@/lib/constants"
 
 export default function TodoForm({
   close,
@@ -24,6 +25,8 @@ export default function TodoForm({
     initialState
   )
   const [text, setText] = useState(isCreation ? "" : data.text)
+  const textLength = text.trim().length
+  const isTextValid = textLength > 0 && textLength <= TODO_ITEM_MAX_LENGTH
 
   useEffect(() => {
     if (!state) {
@@ -39,10 +42,21 @@ export default function TodoForm({
           name="todo"
           value={text}
           onChange={(e) => setText(e.target.value)}
+          required
+          autoFocus
         />
-        {state?.errors?.todo && (
-          <p className="mt-2 text-sm text-destructive">{state.errors.todo}</p>
-        )}
+        <div className="flex flex-row-reverse justify-between gap-4 mt-2 text-sm">
+          <p
+            className={
+              isTextValid ? "text-muted-foreground" : "text-destructive"
+            }
+          >
+            {textLength}/{TODO_ITEM_MAX_LENGTH}
+          </p>
+          {state?.errors?.todo && (
+            <p className="text-destructive">{state.errors.todo}</p>
+          )}
+        </div>
       </div>
       <div className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
         <Button type="button" variant={"outline"} onClick={close}>

@@ -24,9 +24,9 @@ export default async function TodoGroupPage(props: {
     <>
       {"id" in todoGroupData ? (
         <div className="w-full space-y-4">
-          <h1>{todoGroupData.name}</h1>
+          <h1 className="break-words">{todoGroupData.name}</h1>
           {todoGroupData.description && (
-            <p className="text-center text-sm text-muted-foreground">
+            <p className="text-center text-sm text-muted-foreground break-words">
               {todoGroupData.description}
             </p>
           )}

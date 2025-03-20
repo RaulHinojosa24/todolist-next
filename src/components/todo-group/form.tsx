@@ -9,6 +9,10 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
+import {
+  TODO_GROUP_DESCRIPTION_MAX_LENGTH,
+  TODO_GROUP_NAME_MAX_LENGTH,
+} from "@/lib/constants"
 
 export default function TodoGroupForm({
   close,
@@ -24,9 +28,14 @@ export default function TodoGroupForm({
     initialState
   )
   const [name, setName] = useState(todoGroup ? todoGroup.name : "")
+  const nameLength = name.trim().length
+  const isNameValid = nameLength > 0 && nameLength <= TODO_GROUP_NAME_MAX_LENGTH
   const [description, setDescription] = useState(
     todoGroup ? todoGroup.description : ""
   )
+  const descriptionLength = description.trim().length
+  const isDescriptionValid =
+    descriptionLength <= TODO_GROUP_DESCRIPTION_MAX_LENGTH
 
   useEffect(() => {
     if (!state) {
@@ -52,9 +61,19 @@ export default function TodoGroupForm({
           autoFocus
           required
         />
-        {state?.errors?.name && (
-          <p className="mt-2 text-sm text-destructive">{state.errors.name}</p>
-        )}
+        <div className="flex flex-row-reverse justify-between gap-4 mt-2 text-sm">
+          <p
+            className={
+              isNameValid ? "text-muted-foreground" : "text-destructive"
+            }
+          >
+            {nameLength}/{TODO_GROUP_NAME_MAX_LENGTH}
+          </p>
+
+          {state?.errors?.name && (
+            <p className="text-destructive">{state.errors.name}</p>
+          )}
+        </div>
       </div>
       <div>
         <Label htmlFor="description">Description</Label>
@@ -64,11 +83,18 @@ export default function TodoGroupForm({
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
-        {state?.errors?.description && (
-          <p className="mt-2 text-sm text-destructive">
-            {state.errors.description}
+        <div className="flex flex-row-reverse justify-between gap-4 text-sm mt-2">
+          <p
+            className={
+              isDescriptionValid ? "text-muted-foreground" : "text-destructive"
+            }
+          >
+            {descriptionLength}/{TODO_GROUP_DESCRIPTION_MAX_LENGTH}
           </p>
-        )}
+          {state?.errors?.description && (
+            <p className="text-destructive">{state.errors.description}</p>
+          )}
+        </div>
       </div>
       <div className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
         <Button type="button" variant={"outline"} onClick={close}>
