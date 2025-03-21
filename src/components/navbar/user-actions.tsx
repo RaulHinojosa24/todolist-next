@@ -3,6 +3,12 @@ import { Button } from "../ui/button"
 import Link from "next/link"
 import { Suspense } from "react"
 import { Loader2 } from "lucide-react"
+import { DropdownMenu } from "@radix-ui/react-dropdown-menu"
+import {
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu"
 
 export default async function UserActions() {
   return (
@@ -25,19 +31,27 @@ async function Async() {
     <>
       {session ? (
         <div className="flex gap-4 items-center">
-          <p className="capitalize">Hi, {session.user.name}</p>
-          <form
-            action={async () => {
-              "use server"
-              await signOut({ redirectTo: "/" })
-            }}
-          >
-            <Button variant={"secondary"}>Log Out</Button>
-          </form>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button>{session.user.name}</Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem>
+                <form
+                  action={async () => {
+                    "use server"
+                    await signOut({ redirectTo: "/" })
+                  }}
+                >
+                  <button>Log Out</button>
+                </form>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       ) : (
         <Link href={"login"}>
-          <Button variant={"secondary"}>Log In</Button>
+          <Button>Log In</Button>
         </Link>
       )}
     </>

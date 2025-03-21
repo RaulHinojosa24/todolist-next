@@ -3,6 +3,7 @@ import { Inter } from "next/font/google"
 import "./globals.css"
 import { Toaster } from "@/components/ui/sonner"
 import NavBar from "@/components/ui/navbar"
+import { ThemeProvider } from "@/components/ui/theme-provider"
 
 const interSans = Inter({
   subsets: ["latin"],
@@ -19,11 +20,17 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <meta name="apple-mobile-web-app-title" content="Owari" />
       </head>
       <body className={`${interSans.className} antialiased flex flex-col `}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
           <NavBar />
           <main className="grow flex flex-col items-center justify-center w-full max-w-4xl mx-auto space-y-8">
             {children}
@@ -33,6 +40,7 @@ export default function RootLayout({
             © {new Date().getFullYear()} Raul Hinojosa Perez. Licensed under the
             MIT License.
           </footer>
+        </ThemeProvider>
       </body>
     </html>
   )

@@ -1,11 +1,12 @@
 import { Button } from "./button"
 import Link from "next/link"
 import UserActions from "../navbar/user-actions"
+import { ThemeToggle } from "./theme-toggle"
 
 export default function NavBar() {
   return (
     <nav className="flex items-center justify-between gap-4 p-2">
-      <div className="flex gap-4">
+      <div className="flex gap-2">
         <Link href={"/"}>
           <Button variant={"link"}>Home</Button>
         </Link>
@@ -13,7 +14,10 @@ export default function NavBar() {
           <Button variant={"link"}>Tasks</Button>
         </Link>
       </div>
-      <UserActions />
+      <div className="flex items-center gap-4">
+        <ThemeToggle />
+        <UserActions />
+      </div>
     </nav>
   )
 }

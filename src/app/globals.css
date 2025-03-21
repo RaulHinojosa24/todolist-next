@@ -65,7 +65,7 @@
   }
   html,
   body {
-    @apply min-h-screen;
+    @apply min-h-dvh;
   }
   body {
     @apply bg-background text-foreground mx-8;
