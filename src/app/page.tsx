@@ -1,8 +1,29 @@
+import { Hina_Mincho } from "next/font/google"
+import Image from "next/image"
+
+const hinaMincho = Hina_Mincho({
+  weight: "400",
+  subsets: ["latin"],
+})
+
 export default async function Home() {
   return (
-    <>
-      <h1>Task Manager</h1>
-      <p>Here you&apos;ll have a list of all the stuff you promised to do!</p>
-    </>
+    <div className="flex flex-col items-center justify-center w-full h-full p-4">
+      <Image
+        src={"logo.svg"}
+        alt="Logo of a kanji meaning 'owari'"
+        width={1200}
+        height={1200}
+        className="w-36 aspect-square"
+      />
+      <h1 className={`${hinaMincho.className} text-4xl`}>Owari.</h1>
+      <h2 className={`${hinaMincho.className} text-xl mb-4`}>
+        end, conclusion, finish
+      </h2>
+      <p className="text-center mb-2">
+        This task manager app helps you complete tasks, ensuring nothing is left
+        unfinished.
+      </p>
+    </div>
   )
 }
