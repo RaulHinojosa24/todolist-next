@@ -24,11 +24,15 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-title" content="Owari" />
       </head>
       <body className={`${interSans.className} antialiased flex flex-col `}>
-        <NavBar />
-        <main className="grow flex flex-col items-center justify-center w-full max-w-4xl mx-auto space-y-8">
-          {children}
-        </main>
-        <Toaster position="bottom-center" richColors />
+          <NavBar />
+          <main className="grow flex flex-col items-center justify-center w-full max-w-4xl mx-auto space-y-8">
+            {children}
+          </main>
+          <Toaster position="bottom-center" richColors />
+          <footer className="w-full py-4 text-center text-sm text-muted-foreground">
+            © {new Date().getFullYear()} Raul Hinojosa Perez. Licensed under the
+            MIT License.
+          </footer>
       </body>
     </html>
   )
