@@ -11,7 +11,25 @@ const interSans = Inter({
 
 export const metadata: Metadata = {
   title: "owari: task manager",
-  description: "Manage all your tasks easily.",
+  description:
+    "Owari is a task manager application that helps you manage all your tasks easily and efficiently.",
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://owari.vercel.app",
+    siteName: "owari",
+    title: "owari: task manager",
+    description:
+      "Owari is a task manager application that helps you manage all your tasks easily and efficiently.",
+    images: [
+      {
+        url: "https://owari.vercel.app/opengraph-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Owari is a task manager application that helps you manage all your tasks easily and efficiently.",
+      },
+    ],
+  },
 }
 
 export default function RootLayout({
