@@ -18,6 +18,7 @@ export default function TodoForm({
 }) {
   const isCreation = typeof data === "string"
   const initialState: TodoItemState = { message: null, errors: {} }
+  const [formDisabled, setFormDisabled] = useState(false)
   const [state, formAction] = useActionState(
     isCreation
       ? createTodoItem.bind(null, data)
@@ -32,11 +33,21 @@ export default function TodoForm({
     if (!state) {
       close()
       toast.success(`Task ${isCreation ? "created" : "modified"} successfully!`)
+    } else {
+      setFormDisabled(false)
     }
   }, [state, close, isCreation])
 
+  function submitHandler(e: React.FormEvent<HTMLFormElement>) {
+    if (formDisabled) {
+      e.preventDefault()
+      return
+    }
+    setFormDisabled(true)
+  }
+
   return (
-    <form action={formAction} className="space-y-4">
+    <form onSubmit={submitHandler} action={formAction} className="space-y-4">
       <div>
         <Input
           name="todo"
@@ -62,7 +73,9 @@ export default function TodoForm({
         <Button type="button" variant={"outline"} onClick={close}>
           Cancel
         </Button>
-        <Button type="submit">Submit</Button>
+        <Button type="submit" disabled={formDisabled}>
+          Submit
+        </Button>
       </div>{" "}
     </form>
   )

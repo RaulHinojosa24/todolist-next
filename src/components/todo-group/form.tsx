@@ -27,6 +27,7 @@ export default function TodoGroupForm({
     todoGroup ? editTodoGroup.bind(null, todoGroup.id) : createTodoGroup,
     initialState
   )
+  const [formDisabled, setFormDisabled] = useState(false)
   const [name, setName] = useState(todoGroup ? todoGroup.name : "")
   const nameLength = name.trim().length
   const isNameValid = nameLength > 0 && nameLength <= TODO_GROUP_NAME_MAX_LENGTH
@@ -44,13 +45,24 @@ export default function TodoGroupForm({
     }
     const success = state?.id
     if (success) {
+      close()
       toast.success(`Task group created successfully!`)
       router.push(`/tasks/${state.id}`)
+    } else {
+      setFormDisabled(false)
     }
   }, [state, router, close, todoGroup])
 
+  function submitHandler(e: React.FormEvent<HTMLFormElement>) {
+    if (formDisabled) {
+      e.preventDefault()
+      return
+    }
+    setFormDisabled(true)
+  }
+
   return (
-    <form action={formAction} className="space-y-4">
+    <form onSubmit={submitHandler} action={formAction} className="space-y-4">
       <div>
         <Label htmlFor="name">Group Name</Label>
         <Input
@@ -100,7 +112,9 @@ export default function TodoGroupForm({
         <Button type="button" variant={"outline"} onClick={close}>
           Cancel
         </Button>
-        <Button type="submit">Submit</Button>
+        <Button type="submit" disabled={formDisabled}>
+          Submit
+        </Button>
       </div>
     </form>
   )
