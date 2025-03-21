@@ -3,7 +3,7 @@ import NewTodoGroup from "@/components/todo-group/new"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "My Tasks",
+  title: "owari: my tasks",
 }
 
 export default async function TasksPage() {

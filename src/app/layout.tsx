@@ -9,7 +9,7 @@ const interSans = Inter({
 })
 
 export const metadata: Metadata = {
-  title: "Task Manager",
+  title: "owari: task manager",
   description: "Manage all your tasks easily.",
 }
 
@@ -20,6 +20,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <meta name="apple-mobile-web-app-title" content="Owari" />
+      </head>
       <body className={`${interSans.className} antialiased flex flex-col `}>
         <NavBar />
         <main className="grow flex flex-col items-center justify-center w-full max-w-4xl mx-auto space-y-8">

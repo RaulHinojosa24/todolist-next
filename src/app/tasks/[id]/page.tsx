@@ -10,7 +10,10 @@ export async function generateMetadata(props: {
   const todoGroupData = await fetchTodoGroupInfo(id)
 
   return {
-    title: "message" in todoGroupData ? "Error" : todoGroupData.name,
+    title:
+      "message" in todoGroupData
+        ? "owari: error"
+        : `owari: ${todoGroupData.name}`,
   }
 }
 
