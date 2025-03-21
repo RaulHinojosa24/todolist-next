@@ -11,6 +11,13 @@ const interSans = Inter({
 
 export const metadata: Metadata = {
   title: "owari: task manager",
+  creator: "Raul Hinojosa Perez",
+  authors: [
+    {
+      name: "Raul Hinojosa Perez",
+      url: "https://raulhinojosa.vercel.app/",
+    },
+  ],
   description:
     "Owari is a task manager application that helps you manage all your tasks easily and efficiently.",
   openGraph: {
