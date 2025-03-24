@@ -10,12 +10,14 @@ export const metadata: Metadata = {
 
 export default async function TasksPage() {
   return (
-    <div className="w-full space-y-4">
-      <h1>These are your task groups!</h1>
+    <>
+      <h1 className="min-h-[6.75rem] h-fit flex items-end justify-center">
+        These are your task groups!
+      </h1>
       <NewTodoGroup />
       <Suspense fallback={<TodoGroupListSkeleton />}>
         <TodoGroupList />
       </Suspense>
-    </div>
+    </>
   )
 }

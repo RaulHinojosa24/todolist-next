@@ -25,6 +25,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import EditTodo from "./edit"
+import { EllipsisVertical } from "lucide-react"
 
 export default function TodoItem({ item }: { item: TodoItem }) {
   const { id, text, completed } = item
@@ -87,21 +88,7 @@ export default function TodoItem({ item }: { item: TodoItem }) {
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant={"ghost"} className="p-1">
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-              <path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
-              <path d="M12 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
-              <path d="M12 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
-            </svg>
+            <EllipsisVertical />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>

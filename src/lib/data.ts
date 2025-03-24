@@ -1,5 +1,5 @@
 import { sql } from "@vercel/postgres"
-import type { TodoGroup, TodoGroupCounts, TodoItem } from "./definitions"
+import type { TodoGroupCounts, TodoItem } from "./definitions"
 import { auth } from "@/auth"
 import { UUID } from "crypto"
 import { z } from "zod"
@@ -18,11 +18,16 @@ export async function fetchTodoGroupInfo(todoGroupId: UUID) {
   }
 
   try {
-    const { rows } = await sql<TodoGroup>`
-    SELECT *
-    FROM todo_group
-    WHERE id = ${todoGroupId}
-    AND customer_id = ${session?.user?.id}`
+    const { rows } = await sql<TodoGroupCounts>`
+    SELECT tg.*, 
+      COUNT(ti.id) as total_count,
+      COUNT(CASE WHEN ti.completed THEN 1 END) as completed_count,
+      COUNT(CASE WHEN ti.completed THEN NULL ELSE 1 END) as incomplete_count
+    FROM todo_group tg
+    LEFT JOIN todo_item ti ON tg.id = ti.todo_group_id
+    WHERE tg.id = ${todoGroupId}
+    AND tg.customer_id = ${session?.user?.id}
+    GROUP BY tg.id`
 
     if (!rows[0]) {
       return {

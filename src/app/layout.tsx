@@ -57,7 +57,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <NavBar />
-          <main className="grow flex flex-col items-center justify-center w-full max-w-4xl mx-auto space-y-8">
+          <main className="grow flex flex-col w-full max-w-4xl mx-auto space-y-6">
             {children}
           </main>
           <Toaster position="bottom-center" richColors />

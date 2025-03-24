@@ -2,7 +2,6 @@ import { fetchTodoItems } from "@/lib/data"
 import TodoItem from "./item"
 import { UUID } from "crypto"
 import { ClientToastTrigger } from "@/components/ui/sonner"
-import { Progress } from "@/components/ui/progress"
 
 export default async function TodoList({ todoGroupId }: { todoGroupId: UUID }) {
   const todoList = await fetchTodoItems(todoGroupId)
@@ -13,21 +12,11 @@ export default async function TodoList({ todoGroupId }: { todoGroupId: UUID }) {
         <>
           {todoList.length > 0 ? (
             <>
-              <ul>
+              <ul className="space-y-1">
                 {todoList.map((item) => (
                   <TodoItem key={item.id} item={item} />
                 ))}
               </ul>
-              <Progress
-                value={
-                  (todoList.reduce(
-                    (acc, curr) => (acc += curr.completed ? 1 : 0),
-                    0
-                  ) *
-                    100) /
-                  todoList.length
-                }
-              />
             </>
           ) : (
             <p className="text-center">

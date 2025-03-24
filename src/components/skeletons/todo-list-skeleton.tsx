@@ -1,18 +1,14 @@
-import { Progress } from "@/components/ui/progress"
 import { Skeleton } from "@/components/ui/skeleton"
 
 export default function TodoListSkeleton() {
   return (
-    <>
-      <ul className="w-full">
-        {Array(3)
-          .fill(0)
-          .map((_, i) => (
-            <ItemSkeleton key={i} />
-          ))}
-      </ul>
-      <Progress value={0} />
-    </>
+    <ul className="w-full grow">
+      {Array(3)
+        .fill(0)
+        .map((_, i) => (
+          <ItemSkeleton key={i} />
+        ))}
+    </ul>
   )
 }
 

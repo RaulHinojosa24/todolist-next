@@ -8,7 +8,7 @@ const hinaMincho = Hina_Mincho({
 
 export default async function Home() {
   return (
-    <div className="flex flex-col items-center justify-center w-full h-full p-4">
+    <div className="flex flex-col items-center justify-center w-full grow p-4">
       <Logo className="w-36 aspect-square" />
       <h1 className={`${hinaMincho.className} text-4xl`}>Owari.</h1>
       <h2 className={`${hinaMincho.className} text-xl mb-4`}>
