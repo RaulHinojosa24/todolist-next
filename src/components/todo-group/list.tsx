@@ -7,7 +7,7 @@ export default async function TodoGroupList() {
   return (
     <>
       {Array.isArray(todoGroups) ? (
-        <div className="w-full space-y-4">
+        <div>
           {todoGroups.length > 0 ? (
             <ul className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
               {todoGroups.map((item) => (

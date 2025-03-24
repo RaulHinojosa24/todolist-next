@@ -1,8 +1,8 @@
 import { Button } from "./button"
 import Link from "next/link"
-import UserActions from "../navbar/user-actions"
+import UserActions from "@/components/navbar/user-actions"
 import { ThemeToggle } from "./theme-toggle"
-import Logo from "../assets/Logo"
+import Logo from "@/components/assets/Logo"
 
 export default function NavBar() {
   return (

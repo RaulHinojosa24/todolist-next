@@ -6,7 +6,7 @@ import { useActionState, useEffect, useState } from "react"
 import { TodoItem } from "@/lib/definitions"
 import { UUID } from "crypto"
 import { toast } from "sonner"
-import { Input } from "../ui/input"
+import { Input } from "@/components/ui/input"
 import { TODO_ITEM_MAX_LENGTH } from "@/lib/constants"
 
 export default function TodoForm({

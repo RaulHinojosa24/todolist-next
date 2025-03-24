@@ -69,7 +69,7 @@ export default function TodoItem({ item }: { item: TodoItem }) {
   }
 
   return (
-    <li className="items-center flex space-x-2">
+    <li className="items-center flex gap-2">
       <Checkbox
         id={id}
         checked={isChecked}

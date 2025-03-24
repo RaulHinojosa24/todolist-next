@@ -1,21 +1,21 @@
 import { auth, signOut } from "@/auth"
-import { Button } from "../ui/button"
+import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { Suspense } from "react"
 import { Loader2 } from "lucide-react"
-import { DropdownMenu } from "@radix-ui/react-dropdown-menu"
 import {
+  DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "../ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu"
 
 export default async function UserActions() {
   return (
     <Suspense
       fallback={
         <Button disabled>
-          <Loader2 className="animate-spin" /> ...
+          <Loader2 className="animate-spin" />
         </Button>
       }
     >

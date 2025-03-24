@@ -13,7 +13,7 @@ export default async function TodoList({ todoGroupId }: { todoGroupId: UUID }) {
         <>
           {todoList.length > 0 ? (
             <>
-              <ul className="w-full">
+              <ul>
                 {todoList.map((item) => (
                   <TodoItem key={item.id} item={item} />
                 ))}
