@@ -1,7 +1,9 @@
+import TodoListSkeleton from "@/components/skeletons/todo-list-skeleton"
 import TodoList from "@/components/todo/list"
 import NewTodo from "@/components/todo/new"
 import { fetchTodoGroupInfo } from "@/lib/data"
 import { UUID } from "crypto"
+import { Suspense } from "react"
 
 export async function generateMetadata(props: {
   params: Promise<{ id: UUID }>
@@ -34,7 +36,9 @@ export default async function TodoGroupPage(props: {
             </p>
           )}
           <NewTodo todoGroupId={id}></NewTodo>
-          <TodoList todoGroupId={id} />
+          <Suspense fallback={<TodoListSkeleton />}>
+            <TodoList todoGroupId={id} />
+          </Suspense>
         </div>
       ) : (
         <>
