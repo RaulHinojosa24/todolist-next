@@ -3,6 +3,7 @@ import type { TodoGroupCounts, TodoItem } from "./definitions"
 import { auth } from "@/auth"
 import { UUID } from "crypto"
 import { z } from "zod"
+import { decrypt } from "./encryption"
 
 const zUUID = z.string().uuid()
 
@@ -35,7 +36,13 @@ export async function fetchTodoGroupInfo(todoGroupId: UUID) {
       }
     }
 
-    return rows[0]
+    const decryptedData = {
+      ...rows[0],
+      name: decrypt(rows[0].name),
+      description: decrypt(rows[0].description),
+    }
+
+    return decryptedData
   } catch (error) {
     console.error("Database Error:", error)
     return {
@@ -56,9 +63,16 @@ export async function fetchTodoGroups() {
       LEFT JOIN todo_item ti ON tg.id = ti.todo_group_id
       WHERE tg.customer_id = ${session?.user?.id}
       GROUP BY tg.id
-      ORDER BY tg.name`
+      ORDER BY tg.name
+    `
 
-    return data.rows
+    const decryptedData = data.rows.map((group) => ({
+      ...group,
+      name: decrypt(group.name),
+      description: decrypt(group.description),
+    }))
+
+    return decryptedData
   } catch (error) {
     console.error("Database Error:", error)
     return {
@@ -83,7 +97,12 @@ export async function fetchTodoItems(todoGroupId: UUID) {
         WHERE todo_group_id = ${todoGroupId}
         ORDER BY completed, creation_date DESC`
 
-    return data.rows
+    const decryptedData = data.rows.map((item) => ({
+      ...item,
+      text: decrypt(item.text),
+    }))
+
+    return decryptedData
   } catch (error) {
     console.error("Database Error:", error)
     return {

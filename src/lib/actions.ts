@@ -12,6 +12,7 @@ import {
   TODO_GROUP_NAME_MAX_LENGTH,
   TODO_ITEM_MAX_LENGTH,
 } from "./constants"
+import { encrypt } from "./encryption"
 
 export async function authenticate(
   prevState: string | undefined,
@@ -98,11 +99,12 @@ export async function createTodoItem(
   }
 
   const { todo } = validatedFields.data
+  const encryptedTodo = encrypt(todo)
 
   try {
     await sql`
       INSERT INTO todo_item (text, todo_group_id)
-      VALUES (${todo}, ${todoGroupId})
+      VALUES (${encryptedTodo}, ${todoGroupId})
     `
   } catch (error) {
     console.error(error)
@@ -140,11 +142,12 @@ export async function editTodoItem(
   }
 
   const { id, todo } = validatedFields.data
+  const encryptedTodo = encrypt(todo)
 
   try {
     await sql`
       UPDATE todo_item
-      SET text = ${todo}
+      SET text = ${encryptedTodo}
       WHERE id = ${id}
     `
   } catch (error) {
@@ -228,13 +231,15 @@ export async function createTodoGroup(
   }
 
   const { name, description } = validatedFields.data
+  const encryptedName = encrypt(name)
+  const encryptedDescription = encrypt(description)
 
   try {
     const session = await auth()
 
     const { rows } = await sql<TodoGroup>`
       INSERT INTO todo_group (name, description, customer_id)
-      VALUES (${name}, ${description}, ${session?.user?.id})
+      VALUES (${encryptedName}, ${encryptedDescription}, ${session?.user?.id})
       RETURNING id
     `
     revalidatePath("/tasks")
@@ -272,11 +277,13 @@ export async function editTodoGroup(
   }
 
   const { id, name, description } = validatedFields.data
+  const encryptedName = encrypt(name)
+  const encryptedDescription = encrypt(description)
 
   try {
     await sql`
       UPDATE todo_group
-      SET name = ${name}, description = ${description}
+      SET name = ${encryptedName}, description = ${encryptedDescription}
       WHERE id = ${id}
     `
   } catch (error) {
