@@ -549,6 +549,7 @@ const SidebarMenuButton = React.forwardRef<
     asChild?: boolean
     isActive?: boolean
     tooltip?: string | React.ComponentProps<typeof TooltipContent>
+    closeOnClick?: boolean
   } & VariantProps<typeof sidebarMenuButtonVariants>
 >(
   (
@@ -559,20 +560,42 @@ const SidebarMenuButton = React.forwardRef<
       size = "default",
       tooltip,
       className,
+      closeOnClick = !isActive,
       ...props
     },
     ref
   ) => {
     const Comp = asChild ? Slot : "button"
-    const { isMobile, state } = useSidebar()
+    const { isMobile, state, setOpen, setOpenMobile } = useSidebar()
 
+    const handleClick = React.useCallback(
+      (event: React.MouseEvent<HTMLButtonElement>) => {
+        if (props.onClick) {
+          props.onClick(event)
+        }
+
+        if (closeOnClick && !event.defaultPrevented) {
+          if (isMobile) {
+            setOpenMobile(false)
+          } else {
+            setOpen(false)
+          }
+        }
+      },
+      [props, closeOnClick, isMobile, setOpenMobile, setOpen]
+    )
     const button = (
       <Comp
         ref={ref}
         data-sidebar="menu-button"
         data-size={size}
         data-active={isActive}
-        className={cn(sidebarMenuButtonVariants({ variant, size }), className)}
+        className={cn(
+          sidebarMenuButtonVariants({ variant, size }),
+          className,
+          isActive ? "cursor-default" : "cursor-pointer"
+        )}
+        onClick={handleClick}
         {...props}
       />
     )

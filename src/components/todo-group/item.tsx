@@ -24,12 +24,13 @@ import {
 } from "@/components/ui/sidebar"
 import {
   Folder,
-  FolderOpen,
+  // FolderOpen,
   Info,
   MoreHorizontal,
   MoreVertical,
 } from "lucide-react"
 import DeleteTodoGroup from "./delete"
+import { usePathname } from "next/navigation"
 
 export default function TodoGroupItem({
   item,
@@ -40,15 +41,25 @@ export default function TodoGroupItem({
 }) {
   const { id, name, description, completed_count, total_count } = item
 
+  const pathname = usePathname()
+  const isActive = pathname === `/tasks/${id}`
+
   return (
     <>
       {isSidebar ? (
         <SidebarMenuItem key={id}>
-          <SidebarMenuButton asChild>
-            <Link href={`/tasks/${id}`}>
-              <Folder />
-              <span>{name}</span>
-            </Link>
+          <SidebarMenuButton isActive={isActive} asChild={!isActive}>
+            {isActive ? (
+              <>
+                <Folder />
+                <span>{name}</span>
+              </>
+            ) : (
+              <Link href={`/tasks/${id}`}>
+                <Folder />
+                <span>{name}</span>
+              </Link>
+            )}
           </SidebarMenuButton>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -58,13 +69,13 @@ export default function TodoGroupItem({
               </SidebarMenuAction>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-              <DropdownMenuItem className="cursor-pointer" asChild>
+              {/* <DropdownMenuItem className="cursor-pointer" asChild>
                 <Link href={`/tasks/${id}`}>
                   <FolderOpen className="text-muted-foreground" />
                   <span>Visit</span>
                 </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
+              </DropdownMenuItem> */}
+              <DropdownMenuItem disabled>
                 <Info className="text-muted-foreground" />
                 <span>Info</span>
               </DropdownMenuItem>
