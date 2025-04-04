@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button"
 import { useCallback, useState } from "react"
 import TodoForm from "./form"
 import { UUID } from "crypto"
+import { Plus } from "lucide-react"
 
 export default function NewTodo({ todoGroupId }: { todoGroupId: UUID }) {
   const [open, setOpen] = useState(false)
@@ -23,7 +24,10 @@ export default function NewTodo({ todoGroupId }: { todoGroupId: UUID }) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="w-full">+ new task</Button>
+        <Button className="w-full">
+          <Plus />
+          <span>new task</span>
+        </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader className="mb-2">

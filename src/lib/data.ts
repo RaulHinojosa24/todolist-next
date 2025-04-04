@@ -54,6 +54,12 @@ export async function fetchTodoGroupInfo(todoGroupId: UUID) {
 export async function fetchTodoGroups() {
   const session = await auth()
 
+  if (!session?.user?.id) {
+    return {
+      message: "Not authenticated.",
+    }
+  }
+
   try {
     const data = await sql<TodoGroupCounts>`
       SELECT tg.*, 

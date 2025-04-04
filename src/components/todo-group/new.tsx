@@ -11,8 +11,9 @@ import {
 import { Button } from "@/components/ui/button"
 import { useCallback, useState } from "react"
 import TodoGroupForm from "./form"
+import { Plus } from "lucide-react"
 
-export default function NewTodoGroup() {
+export default function NewTodoGroup({ isSidebar }: { isSidebar?: boolean }) {
   const [open, setOpen] = useState(false)
 
   const handleClose = useCallback(() => {
@@ -22,7 +23,10 @@ export default function NewTodoGroup() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="w-full">+ new task group</Button>
+        <Button className="w-full" size={isSidebar ? "dropdown" : "default"}>
+          <Plus />
+          <span>new task group</span>
+        </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader className="mb-2">

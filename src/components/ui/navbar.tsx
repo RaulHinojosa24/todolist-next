@@ -1,25 +1,52 @@
-import { Button } from "./button"
-import Link from "next/link"
-import UserActions from "@/components/navbar/user-actions"
+"use client"
+
 import { ThemeToggle } from "./theme-toggle"
-import Logo from "@/components/assets/Logo"
+import { SidebarTrigger } from "@/components/ui/sidebar"
+import { Separator } from "@/components/ui/separator"
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb"
+import { useBreadcrumb } from "@/context/breadcrumb-context"
+import { Fragment } from "react"
+import Link from "next/link"
 
 export default function NavBar() {
+  const { items } = useBreadcrumb()
+
   return (
-    <nav className="flex items-center justify-between gap-4 p-2">
-      <div className="flex gap-2">
-        <Logo className="h-9" />
-        <Link href={"/"}>
-          <Button variant={"link"}>Home</Button>
-        </Link>
-        <Link href={"/tasks"}>
-          <Button variant={"link"}>Tasks</Button>
-        </Link>
-      </div>
-      <div className="flex items-center gap-4">
+    <div className="flex items-center gap-4 px-3 py-2">
+      <SidebarTrigger />
+      {items.length > 0 && (
+        <>
+          <Separator orientation="vertical" className="h-4" />
+          <Breadcrumb>
+            <BreadcrumbList>
+              {items.map((item, index) => (
+                <Fragment key={index}>
+                  <BreadcrumbItem>
+                    {item.href ? (
+                      <BreadcrumbLink asChild>
+                        <Link href={item.href}>{item.label}</Link>
+                      </BreadcrumbLink>
+                    ) : (
+                      <BreadcrumbPage>{item.label}</BreadcrumbPage>
+                    )}
+                  </BreadcrumbItem>
+                  {index < items.length - 1 && <BreadcrumbSeparator />}
+                </Fragment>
+              ))}
+            </BreadcrumbList>
+          </Breadcrumb>
+        </>
+      )}
+      <div className="ml-auto">
         <ThemeToggle />
-        <UserActions />
       </div>
-    </nav>
+    </div>
   )
 }

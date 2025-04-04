@@ -4,6 +4,10 @@ import "./globals.css"
 import { Toaster } from "@/components/ui/sonner"
 import NavBar from "@/components/ui/navbar"
 import { ThemeProvider } from "@/components/ui/theme-provider"
+import { SidebarProvider } from "@/components/ui/sidebar"
+import { AppSidebar } from "@/components/nav/app-sidebar"
+import { TooltipProvider } from "@/components/ui/tooltip"
+import { BreadcrumbProvider } from "@/context/breadcrumb-context"
 
 const interSans = Inter({
   subsets: ["latin"],
@@ -49,23 +53,32 @@ export default function RootLayout({
       <head>
         <meta name="apple-mobile-web-app-title" content="Owari" />
       </head>
-      <body className={`${interSans.className} antialiased flex flex-col `}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <NavBar />
-          <main className="grow flex flex-col w-full max-w-4xl mx-auto space-y-6">
-            {children}
-          </main>
-          <Toaster position="bottom-center" richColors />
-          <footer className="w-full py-4 text-center text-sm text-muted-foreground">
-            © {new Date().getFullYear()} Raul Hinojosa Perez. Licensed under the
-            MIT License.
-          </footer>
-        </ThemeProvider>
+      <body className={`${interSans.className} antialiased`}>
+        <SidebarProvider defaultOpen={false}>
+          <TooltipProvider>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <BreadcrumbProvider>
+                <AppSidebar />
+                <div className="grow flex flex-col">
+                  <NavBar />
+                  <main className="grow flex flex-col w-full max-w-4xl mx-auto space-y-6">
+                    {children}
+                  </main>
+                  <Toaster position="bottom-center" richColors />
+                  <footer className="w-full py-4 text-center text-sm text-muted-foreground">
+                    © {new Date().getFullYear()} Raul Hinojosa Perez. Licensed
+                    under the MIT License.
+                  </footer>
+                </div>
+              </BreadcrumbProvider>
+            </ThemeProvider>
+          </TooltipProvider>
+        </SidebarProvider>
       </body>
     </html>
   )

@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button"
 import { useCallback, useState } from "react"
 import TodoGroupForm from "./form"
 import { TodoGroup } from "@/lib/definitions"
+import { Edit } from "lucide-react"
 
 export default function EditTodoGroup({ todoGroup }: { todoGroup: TodoGroup }) {
   const [open, setOpen] = useState(false)
@@ -23,11 +24,9 @@ export default function EditTodoGroup({ todoGroup }: { todoGroup: TodoGroup }) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button
-          className="w-full flex items-center justify-start gap-2 px-2 py-1.5 text-sm"
-          variant={"ghost"}
-        >
-          Edit
+        <Button role="menuitem" variant={"ghost"} size={"dropdown"}>
+          <Edit className="text-muted-foreground" />
+          <span>Edit</span>
         </Button>
       </DialogTrigger>
       <DialogContent>

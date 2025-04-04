@@ -11,6 +11,7 @@ import {
   HoverCardTrigger,
 } from "@/components/ui/hover-card"
 import { Info } from "lucide-react"
+import BreadcrumbUpdater from "@/components/ui/breadcrumb-updater"
 
 export async function generateMetadata(props: {
   params: Promise<{ id: UUID }>
@@ -33,47 +34,48 @@ export default async function TodoGroupPage(props: {
   const todoGroupData = await fetchTodoGroupInfo(id)
   await new Promise((resolve) => setTimeout(resolve, 2000))
 
-  return (
+  return "id" in todoGroupData ? (
     <>
-      {"id" in todoGroupData ? (
-        <>
-          <div className="min-h-[6.75rem] h-fit flex items-end justify-center">
-            <h1>
-              {todoGroupData.name}
-              <HoverCard>
-                <HoverCardTrigger className="inline-flex ml-2">
-                  <Info />
-                </HoverCardTrigger>
-                <HoverCardContent className="text-sm font-normal">
-                  {todoGroupData.description
-                    ? todoGroupData.description
-                    : "No description"}
-                </HoverCardContent>
-              </HoverCard>
-            </h1>
-          </div>
-          <NewTodo todoGroupId={id} />
-          <div className="grow">
-            <Suspense fallback={<TodoListSkeleton />}>
-              <TodoList todoGroupId={id} />
-            </Suspense>
-          </div>
-          <div>
-            <p className="text-sm text-muted-foreground text-center mb-1">
-              {todoGroupData.completed_count} of {todoGroupData.total_count}{" "}
-              completed
-            </p>
-            <Progress
-              value={
-                (todoGroupData.completed_count * 100) /
-                todoGroupData.total_count
-              }
-            />
-          </div>
-        </>
-      ) : (
-        <p>{todoGroupData.message}</p>
-      )}
+      <BreadcrumbUpdater
+        items={[
+          { href: "/tasks", label: "Tasks" },
+          { label: todoGroupData.name },
+        ]}
+      />
+      <div className="min-h-[6.75rem] h-fit flex items-end justify-center">
+        <h1>
+          {todoGroupData.name}
+          <HoverCard>
+            <HoverCardTrigger className="inline-flex ml-2">
+              <Info />
+            </HoverCardTrigger>
+            <HoverCardContent className="text-sm font-normal">
+              {todoGroupData.description
+                ? todoGroupData.description
+                : "No description"}
+            </HoverCardContent>
+          </HoverCard>
+        </h1>
+      </div>
+      <NewTodo todoGroupId={id} />
+      <div className="grow">
+        <Suspense fallback={<TodoListSkeleton />}>
+          <TodoList todoGroupId={id} />
+        </Suspense>
+      </div>
+      <div>
+        <p className="text-sm text-muted-foreground text-center mb-1">
+          {todoGroupData.completed_count} of {todoGroupData.total_count}{" "}
+          completed
+        </p>
+        <Progress
+          value={
+            (todoGroupData.completed_count * 100) / todoGroupData.total_count
+          }
+        />
+      </div>
     </>
+  ) : (
+    <p>{todoGroupData.message}</p>
   )
 }
