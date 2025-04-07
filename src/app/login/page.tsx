@@ -10,7 +10,7 @@ export default function LoginPage() {
         items={[{ href: "/", label: "Home" }, { label: "Login" }]}
       />
 
-      <Card>
+      <Card className="my-auto place-self-center">
         <CardHeader>
           <CardTitle>Welcome back!</CardTitle>
         </CardHeader>
