@@ -20,7 +20,7 @@ function ItemSkeleton() {
     <div className="flex items-center justify-between gap-2 h-9">
       <Skeleton className="h-4 aspect-square" />
       <Skeleton className={"h-4 " + randomWidth} />
-      <Skeleton className="h-4 ml-auto aspect-[1/2]" />
+      <Skeleton className="h-4 ml-auto aspect-1/2" />
     </div>
   )
 }

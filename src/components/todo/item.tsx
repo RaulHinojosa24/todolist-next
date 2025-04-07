@@ -56,7 +56,7 @@ export default function TodoItem({ item }: { item: TodoItem }) {
       />
       <Label
         htmlFor={id}
-        className={`flex-grow cursor-pointer ${
+        className={`grow cursor-pointer ${
           isChecked ? "line-through opacity-70" : ""
         }`}
       >
