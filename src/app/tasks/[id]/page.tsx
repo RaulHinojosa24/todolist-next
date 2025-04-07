@@ -1,3 +1,4 @@
+import { notFound } from "next/navigation"
 import TodoListSkeleton from "@/components/skeletons/todo-list-skeleton"
 import TodoList from "@/components/todo/list"
 import NewTodo from "@/components/todo/new"
@@ -32,9 +33,14 @@ export default async function TodoGroupPage(props: {
 }) {
   const { id } = await props.params
   const todoGroupData = await fetchTodoGroupInfo(id)
+
+  if (!("id" in todoGroupData)) {
+    notFound()
+  }
+
   await new Promise((resolve) => setTimeout(resolve, 2000))
 
-  return "id" in todoGroupData ? (
+  return (
     <>
       <BreadcrumbUpdater
         items={[
@@ -76,7 +82,5 @@ export default async function TodoGroupPage(props: {
         />
       </div>
     </>
-  ) : (
-    <p>{todoGroupData.message}</p>
   )
 }

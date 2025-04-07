@@ -14,14 +14,17 @@ import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
 import { Trash2 } from "lucide-react"
 import { UUID } from "crypto"
+import { useRouter } from "next/navigation"
 
 export default function DeleteTodoGroup({ id }: { id: UUID }) {
+  const router = useRouter()
   function deleteHandler() {
     const res = deleteTodoGroup.bind(null, id)()
 
     toast.promise(res, {
       loading: "Loading...",
       success: () => {
+        router.push("/tasks")
         return `Task group has been deleted.`
       },
       error: (error) => {
