@@ -54,7 +54,7 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-title" content="Owari" />
       </head>
       <body className={`${interSans.className} antialiased`}>
-        <SidebarProvider defaultOpen={false}>
+        <SidebarProvider>
           <TooltipProvider>
             <ThemeProvider
               attribute="class"
@@ -66,11 +66,11 @@ export default function RootLayout({
                 <AppSidebar />
                 <div className="grow flex flex-col">
                   <NavBar />
-                  <main className="grow flex flex-col w-full max-w-4xl mx-auto space-y-6">
+                  <main className="grow flex flex-col w-full max-w-4xl mx-auto space-y-6 overflow-hidden">
                     {children}
                   </main>
                   <Toaster position="bottom-center" richColors />
-                  <footer className="w-full py-4 text-center text-sm text-muted-foreground">
+                  <footer className="w-full p-2 text-center text-xs text-muted-foreground">
                     © {new Date().getFullYear()} Raul Hinojosa Perez. Licensed
                     under the MIT License.
                   </footer>

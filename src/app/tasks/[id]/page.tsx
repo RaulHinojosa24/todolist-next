@@ -58,7 +58,7 @@ export default async function TodoGroupPage(props: {
         </h1>
       </div>
       <NewTodo todoGroupId={id} />
-      <div className="grow">
+      <div className="grow overflow-auto -mr-8 pr-8">
         <Suspense fallback={<TodoListSkeleton />}>
           <TodoList todoGroupId={id} />
         </Suspense>

@@ -18,9 +18,11 @@ export default async function TasksPage() {
         These are your task groups!
       </h1>
       <NewTodoGroup />
-      <Suspense fallback={<TodoGroupListSkeleton />}>
-        <TodoGroupList />
-      </Suspense>
+      <div className="grow overflow-auto -mr-8 pr-8">
+        <Suspense fallback={<TodoGroupListSkeleton />}>
+          <TodoGroupList />
+        </Suspense>
+      </div>
     </>
   )
 }

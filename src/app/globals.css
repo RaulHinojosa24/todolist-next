@@ -77,15 +77,15 @@
 
 @layer base {
   * {
-    @apply border-border;
+    @apply border-border scrollbar-thin scrollbar-track-primary/20 scrollbar-thumb-primary;
     word-break: break-word;
   }
   html,
   body {
-    @apply min-h-dvh;
+    @apply h-dvh;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground flex flex-col;
   }
   h1 {
     @apply text-3xl font-bold text-center;
