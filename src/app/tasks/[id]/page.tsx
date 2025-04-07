@@ -38,6 +38,7 @@ export default async function TodoGroupPage(props: {
     <>
       <BreadcrumbUpdater
         items={[
+          { href: "/", label: "Home" },
           { href: "/tasks", label: "Tasks" },
           { label: todoGroupData.name },
         ]}

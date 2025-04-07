@@ -12,7 +12,9 @@ export const metadata: Metadata = {
 export default async function TasksPage() {
   return (
     <>
-      <BreadcrumbUpdater items={[{ label: "Tasks" }]} />
+      <BreadcrumbUpdater
+        items={[{ href: "/", label: "Home" }, { label: "Tasks" }]}
+      />
 
       <h1 className="min-h-[6.75rem] h-fit flex items-end justify-center">
         These are your task groups!

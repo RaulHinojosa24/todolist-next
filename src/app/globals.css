@@ -165,4 +165,7 @@
   main {
     @apply px-8;
   }
+  button {
+    @apply cursor-pointer;
+  }
 }

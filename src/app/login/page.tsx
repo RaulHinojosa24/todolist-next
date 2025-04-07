@@ -6,7 +6,9 @@ import { Suspense } from "react"
 export default function LoginPage() {
   return (
     <>
-      <BreadcrumbUpdater items={[{ label: "Login" }]} />
+      <BreadcrumbUpdater
+        items={[{ href: "/", label: "Home" }, { label: "Login" }]}
+      />
 
       <Card>
         <CardHeader>
