@@ -32,7 +32,7 @@ export default function NewTodo({ todoGroupId }: { todoGroupId: UUID }) {
       <DialogContent>
         <DialogHeader className="mb-2">
           <DialogTitle>Creating a New Task</DialogTitle>
-          <DialogDescription>What would do like to achieve?</DialogDescription>
+          <DialogDescription>What would you like to achieve?</DialogDescription>
         </DialogHeader>
         <TodoForm close={handleClose} data={todoGroupId} />
       </DialogContent>

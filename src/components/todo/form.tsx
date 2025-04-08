@@ -65,7 +65,7 @@ export default function TodoForm({
             {textLength}/{TODO_ITEM_MAX_LENGTH}
           </p>
           {state?.errors?.todo && (
-            <p className="text-destructive">{state.errors.todo}</p>
+            <p className="text-sm text-destructive">{state.errors.todo}</p>
           )}
         </div>
       </div>

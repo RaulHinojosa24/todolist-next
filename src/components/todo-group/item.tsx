@@ -22,13 +22,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
-import {
-  Folder,
-  // FolderOpen,
-  Info,
-  MoreHorizontal,
-  MoreVertical,
-} from "lucide-react"
+import { Folder, Info, MoreHorizontal, MoreVertical } from "lucide-react"
 import DeleteTodoGroup from "./delete"
 import { usePathname } from "next/navigation"
 
@@ -69,12 +63,6 @@ export default function TodoGroupItem({
               </SidebarMenuAction>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-              {/* <DropdownMenuItem className="cursor-pointer" asChild>
-                <Link href={`/tasks/${id}`}>
-                  <FolderOpen className="text-muted-foreground" />
-                  <span>Visit</span>
-                </Link>
-              </DropdownMenuItem> */}
               <DropdownMenuItem disabled>
                 <Info className="text-muted-foreground" />
                 <span>Info</span>

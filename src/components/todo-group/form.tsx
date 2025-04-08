@@ -13,6 +13,7 @@ import {
   TODO_GROUP_DESCRIPTION_MAX_LENGTH,
   TODO_GROUP_NAME_MAX_LENGTH,
 } from "@/lib/constants"
+import { cn } from "@/lib/utils"
 
 export default function TodoGroupForm({
   close,
@@ -75,15 +76,16 @@ export default function TodoGroupForm({
         />
         <div className="flex flex-row-reverse justify-between gap-4 mt-2 text-sm">
           <p
-            className={
+            className={cn(
+              "shrink-0",
               isNameValid ? "text-muted-foreground" : "text-destructive"
-            }
+            )}
           >
             {nameLength}/{TODO_GROUP_NAME_MAX_LENGTH}
           </p>
 
           {state?.errors?.name && (
-            <p className="text-destructive">{state.errors.name}</p>
+            <p className="text-sm text-destructive">{state.errors.name}</p>
           )}
         </div>
       </div>
@@ -97,14 +99,17 @@ export default function TodoGroupForm({
         />
         <div className="flex flex-row-reverse justify-between gap-4 text-sm mt-2">
           <p
-            className={
+            className={cn(
+              "shrink-0",
               isDescriptionValid ? "text-muted-foreground" : "text-destructive"
-            }
+            )}
           >
             {descriptionLength}/{TODO_GROUP_DESCRIPTION_MAX_LENGTH}
           </p>
           {state?.errors?.description && (
-            <p className="text-destructive">{state.errors.description}</p>
+            <p className="text-sm text-destructive">
+              {state.errors.description}
+            </p>
           )}
         </div>
       </div>

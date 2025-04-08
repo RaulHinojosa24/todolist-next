@@ -31,7 +31,7 @@ export default function EditTodoGroup({ todoGroup }: { todoGroup: TodoGroup }) {
       </DialogTrigger>
       <DialogContent>
         <DialogHeader className="mb-2">
-          <DialogTitle>Creating a New Task Group</DialogTitle>
+          <DialogTitle>Editing Task Group</DialogTitle>
           <DialogDescription>
             What kind of tasks are you planning to do?
           </DialogDescription>

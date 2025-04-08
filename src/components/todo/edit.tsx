@@ -32,7 +32,7 @@ export default function EditTodo({ todo }: { todo: TodoItem }) {
       <DialogContent>
         <DialogHeader className="mb-2">
           <DialogTitle>Editing Task</DialogTitle>
-          <DialogDescription>What would do like to achieve?</DialogDescription>
+          <DialogDescription>What would you like to achieve?</DialogDescription>
         </DialogHeader>
         <TodoForm close={handleClose} data={todo} />
       </DialogContent>
