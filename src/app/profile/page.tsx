@@ -16,7 +16,12 @@ export default async function ProfilePage() {
     )
   }
   const { name, username } = session.user
-  const avatarFallback = username[0].toUpperCase()
+  const avatarFallback = name
+    .split(" ")
+    .map((n) => n[0])
+    .slice(0, 2)
+    .join("")
+    .toUpperCase()
 
   return (
     <>
@@ -24,15 +29,15 @@ export default async function ProfilePage() {
         items={[{ href: "/", label: "Home" }, { label: "Profile" }]}
       />
 
-      <div className="my-auto place-self-center overflow-auto space-y-3">
+      <div className="my-auto place-self-center overflow-auto flex flex-col items-center space-y-3">
         <Avatar className="mx-auto size-32 rounded-full">
           {/* <AvatarImage src={user.avatar} alt={user.name} /> */}
           <AvatarFallback className="text-6xl">{avatarFallback}</AvatarFallback>
         </Avatar>
         <div>
-          <p className="text-center text-2xl font-semibold">{username}</p>
-          <p className="text-center text-sm font-semibold text-muted-foreground">
-            {name}
+          <p className="text-center text-2xl font-semibold">{name}</p>
+          <p className="text-center text font-semibold text-muted-foreground">
+            @{username}
           </p>
         </div>
         <ChangePassword />

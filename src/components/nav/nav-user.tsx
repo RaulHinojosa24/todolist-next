@@ -38,7 +38,12 @@ export default async function NavUser() {
   }
 
   const { name, username } = session.user
-  const avatarFallback = username[0].toUpperCase()
+  const avatarFallback = name
+    .split(" ")
+    .map((n) => n[0])
+    .slice(0, 2)
+    .join("")
+    .toUpperCase()
 
   return (
     <SidebarMenu>
@@ -56,8 +61,8 @@ export default async function NavUser() {
                 </AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-semibold">{username}</span>
-                <span className="truncate text-xs">{name}</span>
+                <span className="truncate font-semibold">{name}</span>
+                <span className="truncate text-xs">@{username}</span>
               </div>
               <ChevronsUpDown className="ml-auto size-4" />
             </SidebarMenuButton>

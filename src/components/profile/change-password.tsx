@@ -32,7 +32,7 @@ export default function ChangePassword() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="w-full">
+        <Button>
           <Edit />
           <span>Change Password</span>
         </Button>
