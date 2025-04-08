@@ -13,6 +13,7 @@ import {
   TODO_ITEM_MAX_LENGTH,
 } from "./constants"
 import { encrypt } from "./encryption"
+import bcrypt from "bcrypt"
 
 export async function authenticate(
   prevState: string | undefined,
@@ -30,6 +31,142 @@ export async function authenticate(
       }
     }
     throw error
+  }
+}
+
+const PasswordSchema = z
+  .string({
+    message: "Password is required.",
+  })
+  .trim()
+  .min(8, {
+    message: "Password must be at least 8 characters long.",
+  })
+  .refine((val) => !/\s/.test(val), {
+    message: "Password must not contain spaces.",
+  })
+
+export type DefaultState = {
+  errors?: string[]
+  message?: string | null
+}
+
+export async function confirmPassword(
+  prevState: DefaultState | undefined | null,
+  formData: FormData
+) {
+  const session = await auth()
+  if (!session?.user?.id) {
+    return {
+      errors: ["Session expired. Please log in again."],
+    }
+  }
+
+  const formPassw = formData.get("current-password")
+
+  try {
+    const parsedPassw = PasswordSchema.safeParse(formPassw)
+
+    if (!parsedPassw.success) {
+      return {
+        errors: parsedPassw.error.flatten().formErrors,
+        message: "Invalid password.",
+      }
+    }
+
+    const password = parsedPassw.data
+
+    const {
+      rows: [customer],
+    } = await sql`
+      SELECT password
+      FROM customer
+      WHERE id = ${session.user.id}
+      `
+
+    if (!customer) {
+      return {
+        errors: ["User not found."],
+      }
+    }
+
+    const passwordsMatch = await bcrypt.compare(password, customer.password)
+
+    if (!passwordsMatch) {
+      return {
+        errors: ["Incorrect password."],
+      }
+    }
+
+    return null
+  } catch (error) {
+    console.error(error)
+    return {
+      errors: ["Database error. Please try again."],
+    }
+  }
+}
+
+export async function updateCustomerPassword(
+  prevState: DefaultState | undefined | null,
+  formData: FormData
+) {
+  const session = await auth()
+  if (!session?.user?.id) {
+    return {
+      errors: ["Session expired. Please log in again."],
+    }
+  }
+
+  const newPassw = formData.get("new-password")
+  const confirmPassw = formData.get("confirm-password")
+
+  if (newPassw !== confirmPassw) {
+    return {
+      errors: ["Passwords do not match."],
+    }
+  }
+
+  try {
+    const parsedPassw = PasswordSchema.safeParse(newPassw)
+
+    if (!parsedPassw.success) {
+      return {
+        errors: parsedPassw.error.flatten().formErrors,
+        message: "Invalid password.",
+      }
+    }
+
+    const password = parsedPassw.data
+
+    const {
+      rows: [customer],
+    } = await sql`
+      SELECT password
+      FROM customer
+      WHERE id = ${session.user.id}
+      `
+
+    if (!customer) {
+      return {
+        errors: ["User not found."],
+      }
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10)
+
+    await sql`
+      UPDATE customer
+      SET password = ${hashedPassword}
+      WHERE id = ${session.user.id}
+    `
+
+    return null
+  } catch (error) {
+    console.error(error)
+    return {
+      errors: ["Database error. Please try again."],
+    }
   }
 }
 

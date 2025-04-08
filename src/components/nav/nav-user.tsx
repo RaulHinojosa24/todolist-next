@@ -1,9 +1,10 @@
-import { ChevronsUpDown, LogIn, LogOut } from "lucide-react"
+import { ChevronsUpDown, LogIn, LogOut, User } from "lucide-react"
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
@@ -79,28 +80,33 @@ export default async function NavUser() {
                 </div>
               </div>
             </DropdownMenuLabel>
-            {/* <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <Bell />
-                Notifications
-              </DropdownMenuItem>
-            </DropdownMenuGroup> */}
             <DropdownMenuSeparator />
-            <DropdownMenuItem asChild>
-              <Button
-                variant={"ghost"}
-                size={"dropdown"}
-                className="w-full cursor-pointer"
-                onClick={async () => {
-                  "use server"
-                  await signOut({ redirectTo: "/" })
-                }}
-              >
-                <LogOut />
-                Log Out
-              </Button>
-            </DropdownMenuItem>
+            <DropdownMenuGroup>
+              <DropdownMenuItem asChild>
+                <Link href="/profile" className="!p-0">
+                  <Button variant={"ghost"} size={"dropdown"}>
+                    <User />
+                    Profile
+                  </Button>
+                </Link>
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
+            <DropdownMenuSeparator />
+            <DropdownMenuGroup>
+              <DropdownMenuItem asChild>
+                <Button
+                  variant={"ghost"}
+                  size={"dropdown"}
+                  onClick={async () => {
+                    "use server"
+                    await signOut({ redirectTo: "/" })
+                  }}
+                >
+                  <LogOut />
+                  Log Out
+                </Button>
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
           </DropdownMenuContent>
         </DropdownMenu>
       </SidebarMenuItem>
