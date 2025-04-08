@@ -26,7 +26,6 @@ export default function PasswordConfirmForm({
 
   useEffect(() => {
     if (!isPending && errorMessage === null) {
-      console.log("Password confirmed")
       onConfirm()
     }
   }, [isPending, errorMessage, onConfirm])

@@ -7,7 +7,13 @@ import PasswordInput from "@/components/ui/password-input"
 import { updateCustomerPassword } from "@/lib/actions"
 import { toast } from "sonner"
 
-export default function PasswordForm({ close }: { close: () => void }) {
+export default function PasswordForm({
+  close,
+  onUpdate,
+}: {
+  close: () => void
+  onUpdate: () => void
+}) {
   const [newPassword, setNewPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
 
@@ -27,8 +33,9 @@ export default function PasswordForm({ close }: { close: () => void }) {
     if (!isPending && errorMessage === null) {
       toast.success("Password changed successfully!")
       close()
+      onUpdate()
     }
-  }, [close, errorMessage, isPending])
+  }, [close, errorMessage, isPending, onUpdate])
 
   return (
     <form onSubmit={submitHandler} action={formAction} className="space-y-3">

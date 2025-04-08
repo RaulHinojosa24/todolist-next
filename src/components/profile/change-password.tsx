@@ -19,9 +19,10 @@ export default function ChangePassword() {
   const [isConfirm, setIsConfirm] = useState(true)
 
   const onConfirm = useCallback(() => {
-    console.log("Password confirmed")
-
     setIsConfirm(false)
+  }, [])
+  const onUpdate = useCallback(() => {
+    setIsConfirm(true)
   }, [])
 
   const handleClose = useCallback(() => {
@@ -46,7 +47,7 @@ export default function ChangePassword() {
         {isConfirm ? (
           <PasswordConfirmForm onConfirm={onConfirm} />
         ) : (
-          <PasswordForm close={handleClose} />
+          <PasswordForm close={handleClose} onUpdate={onUpdate} />
         )}
       </DialogContent>
     </Dialog>
