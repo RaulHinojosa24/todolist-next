@@ -7,20 +7,15 @@ export const authConfig = {
   callbacks: {
     authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user
-      const isOnTasks = nextUrl.pathname.startsWith("/tasks")
+      const isOnHome = nextUrl.pathname === "/"
       const isOnLogin = nextUrl.pathname.startsWith("/login")
-      if (isOnTasks) {
-        if (isLoggedIn) return true
-        return false // Redirect unauthenticated users to login page
-      }
-      if (isOnLogin && isLoggedIn) {
+      if (isOnHome) return true // Allow access to the home page for all users
+      if (!isLoggedIn) return false // Redirect unauthenticated users to login page
+      if (isOnLogin) {
         return Response.redirect(new URL("/tasks", nextUrl))
       }
-      // else if (isLoggedIn) {
-      //   return Response.redirect(new URL('/tasks', nextUrl));
-      // }
       return true
     },
   },
-  providers: [], // Add providers with an empty array for now
+  providers: [],
 } satisfies NextAuthConfig
