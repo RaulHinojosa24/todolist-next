@@ -66,7 +66,7 @@ export default function RootLayout({
                 <AppSidebar />
                 <div className="grow flex flex-col">
                   <NavBar />
-                  <main className="grow flex flex-col w-full max-w-4xl mx-auto space-y-6 overflow-hidden px-8">
+                  <main className="grow flex flex-col w-full max-w-4xl mx-auto space-y-6 px-8">
                     {children}
                   </main>
                   <Toaster position="bottom-center" richColors />

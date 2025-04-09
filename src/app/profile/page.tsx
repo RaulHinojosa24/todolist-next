@@ -29,7 +29,7 @@ export default async function ProfilePage() {
         items={[{ href: "/", label: "Home" }, { label: "Profile" }]}
       />
 
-      <div className="my-auto place-self-center overflow-auto flex flex-col items-center space-y-3">
+      <div className="my-auto place-self-center flex flex-col items-center space-y-3">
         <Avatar className="mx-auto size-32 rounded-full">
           {/* <AvatarImage src={user.avatar} alt={user.name} /> */}
           <AvatarFallback className="text-6xl">{avatarFallback}</AvatarFallback>

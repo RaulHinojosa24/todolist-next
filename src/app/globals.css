@@ -160,9 +160,12 @@
     @apply bg-background text-foreground flex flex-col;
   }
   h1 {
-    @apply text-3xl font-bold text-center;
+    @apply text-4xl font-bold text-center;
   }
   button {
     @apply cursor-pointer;
+  }
+  .page-title {
+    @apply min-h-30 h-fit flex items-end justify-center;
   }
 }

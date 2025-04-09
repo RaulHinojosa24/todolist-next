@@ -49,7 +49,7 @@ export default async function TodoGroupPage(props: {
           { label: todoGroupData.name },
         ]}
       />
-      <div className="min-h-[6.75rem] h-fit flex items-end justify-center">
+      <div className="page-title justify-center">
         <h1>
           {todoGroupData.name}
           <HoverCard>
@@ -65,7 +65,7 @@ export default async function TodoGroupPage(props: {
         </h1>
       </div>
       <NewTodo todoGroupId={id} />
-      <div className="grow overflow-auto -mr-8 pr-8">
+      <div className="grow">
         <Suspense fallback={<TodoListSkeleton />}>
           <TodoList todoGroupId={id} />
         </Suspense>

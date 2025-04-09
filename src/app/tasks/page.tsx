@@ -16,11 +16,9 @@ export default async function TasksPage() {
         items={[{ href: "/", label: "Home" }, { label: "Tasks" }]}
       />
 
-      <h1 className="min-h-[6.75rem] h-fit flex items-end justify-center">
-        These are your task groups!
-      </h1>
+      <h1 className="page-title">These are your task groups!</h1>
       <NewTodoGroup />
-      <div className="grow overflow-auto -mr-8 pr-8">
+      <div className="grow">
         <Suspense fallback={<TodoGroupListSkeleton />}>
           <TodoGroupList />
         </Suspense>

@@ -4,7 +4,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 
 export default function Loading() {
   return (
-    <div className="my-auto place-self-center overflow-auto space-y-3 flex flex-col items-center">
+    <div className="my-auto place-self-center space-y-3 flex flex-col items-center">
       <Skeleton className="mx-auto size-32 rounded-full"></Skeleton>
       <div className="space-y-1 flex flex-col items-center">
         <Skeleton className="w-48 h-8" />

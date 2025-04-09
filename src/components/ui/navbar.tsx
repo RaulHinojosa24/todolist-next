@@ -19,7 +19,7 @@ export default function NavBar() {
   const { items } = useBreadcrumb()
 
   return (
-    <div className="flex items-center gap-4 px-3 py-2">
+    <div className="flex items-center gap-4 px-3 py-2 sticky top-0 bg-background z-10">
       <SidebarTrigger />
       {items.length > 0 && (
         <>
