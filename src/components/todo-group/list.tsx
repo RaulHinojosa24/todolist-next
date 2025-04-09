@@ -15,7 +15,9 @@ export default async function TodoGroupList() {
               ))}
             </ul>
           ) : (
-            <p>You currently have no task groups, go on and create some!</p>
+            <p className="text-center">
+              You currently have no task groups, go on and create some!
+            </p>
           )}
         </div>
       ) : (

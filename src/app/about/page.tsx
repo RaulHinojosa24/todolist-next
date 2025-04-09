@@ -2,7 +2,13 @@
 
 import BreadcrumbUpdater from "@/components/ui/breadcrumb-updater"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card"
 import {
   Tooltip,
   TooltipContent,
@@ -46,16 +52,18 @@ export default function AboutPage() {
       <section className="space-y-2">
         <h2 className="text-2xl font-semibold">Meet the Team</h2>
         <div className="flex flex-col space-y-4">
-          <div>
-            <h3 className="text-lg font-semibold">Raul Hinojosa</h3>
-            <p className="text-muted-foreground">Full Stack Developer</p>
-            <div className="space-x-2 mt-2">
+          <Card className="w-fit">
+            <CardHeader>
+              <CardTitle>Raul Hinojosa</CardTitle>
+              <CardDescription>Full Stack Developer</CardDescription>
+            </CardHeader>
+            <CardContent className="space-x-2">
               <a
                 href="https://github.com/RaulHinojosa24"
                 className="text-primary"
                 target="_blank"
               >
-                <Button variant={"outline"}>
+                <Button variant={"secondary"} size={"sm"}>
                   <svg viewBox="0 0 128 128">
                     <g fill="currentColor">
                       <path
@@ -73,7 +81,7 @@ export default function AboutPage() {
                 href="https://www.linkedin.com/in/raulhinojosaperez/"
                 target="_blank"
               >
-                <Button variant={"outline"}>
+                <Button variant={"secondary"} size={"sm"}>
                   <svg viewBox="0 0 128 128">
                     <path
                       fill="#0076b2"
@@ -88,13 +96,13 @@ export default function AboutPage() {
                 </Button>
               </a>
               <a href="https://raulhinojosa.vercel.app/" target="_blank">
-                <Button variant={"outline"}>
+                <Button variant={"secondary"} size={"sm"}>
                   <BriefcaseBusiness />
                   Portfolio
                 </Button>
               </a>
-            </div>
-          </div>
+            </CardContent>
+          </Card>
         </div>
       </section>
 
