@@ -1,46 +1,60 @@
-# TodoList Next.js App
+# Owari: A TodoList App With Next.js
 
-This is a simple TodoList application built with Next.js. It allows users to add, edit, and delete tasks.
+This is a simple and intuitive TodoList application built with **Next.js**. It allows users to manage their daily tasks efficiently by adding, editing, deleting, and marking tasks as completed.
+
+## Purpose
+
+The purpose of this project is to provide a practical and user-friendly task management tool while showcasing modern web development practices using Next.js, React, and Tailwind CSS.
 
 ## Features
 
-- Add new tasks
-- Edit existing tasks
-- Delete tasks
-- Mark tasks as completed
+- 📝 **Add new tasks**: Quickly add tasks to your list.
+- ✏️ **Edit tasks**: Modify task details as needed.
+- ❌ **Delete tasks**: Remove tasks you no longer need.
+- ✅ **Mark tasks as completed**: Keep track of your progress.
+- 🌗 **Light/Dark mode**: Switch between light and dark themes for better comfort.
+- 📂 **Task groups**: Organize tasks into groups for better categorization.
+
+## Technologies Used
+
+- [Next.js](https://nextjs.org/) - React framework for server-side rendering and static site generation.
+- [React](https://reactjs.org/) - JavaScript library for building user interfaces.
+- [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS framework for styling.
+- [TypeScript](https://www.typescriptlang.org/) - Typed JavaScript for better development experience.
+- [Lucide Icons](https://lucide.dev/) - Icon library for modern and customizable icons.
 
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js (>= 12.x)
-- npm or yarn
+- **Node.js** (>= 14.x)
+- **npm** or **yarn**
 
 ### Installation
 
 1. Clone the repository:
 
-```bash
-git clone https://github.com/yourusername/todolist-next.git
-```
+   ```bash
+   git clone https://github.com/yourusername/todolist-next.git
+   ```
 
 2. Navigate to the project directory:
 
-```bash
-cd todolist-next
-```
+   ```bash
+   cd todolist-next
+   ```
 
 3. Install the dependencies:
 
-```bash
-npm install
-```
+   ```bash
+   npm install
+   ```
 
-or
+   or
 
-```bash
-yarn install
-```
+   ```bash
+   yarn install
+   ```
 
 ### Running the App
 
@@ -84,9 +98,39 @@ or
 yarn start
 ```
 
+## Folder Structure
+
+```
+todolist-next/
+├── src/
+│   ├── app/                # Application pages and layouts
+│   ├── components/         # Reusable UI components
+│   ├── lib/                # Utility functions and helpers
+│   └── auth.config.ts      # Authentication configuration
+├── public/                 # Static assets
+├── README.md               # Project documentation
+├── package.json            # Project dependencies and scripts
+└── tsconfig.json           # TypeScript configuration
+```
+
 ## Contributing
 
-Contributions are welcome! Please open an issue or submit a pull request.
+Contributions are welcome! Here's how you can contribute:
+
+1. Fork the repository.
+2. Create a new branch for your feature or bug fix:
+   ```bash
+   git checkout -b feature-name
+   ```
+3. Commit your changes:
+   ```bash
+   git commit -m "Add new feature"
+   ```
+4. Push to your branch:
+   ```bash
+   git push origin feature-name
+   ```
+5. Open a pull request.
 
 ## License
 
@@ -95,4 +139,11 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 ## Acknowledgements
 
 - [Next.js](https://nextjs.org/)
-- [React](https://reactjs.org/)
+- [React](https://react.dev/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Lucide Icons](https://lucide.dev/)
+
+## Slogan
+
+**"Owari: Simplify Your Tasks, Master Your Day."**
