@@ -7,13 +7,21 @@ export const authConfig = {
   callbacks: {
     authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user
-      const isOnHome = nextUrl.pathname === "/"
-      const isOnLogin = nextUrl.pathname.startsWith("/login")
-      if (isOnHome) return true // Allow access to the home page for all users
-      if (!isLoggedIn) return false // Redirect unauthenticated users to login page
-      if (isOnLogin) {
+
+      // Public routes
+      const publicRoutes = ["/", "/about"]
+
+      // Allow access to public routes
+      if (publicRoutes.includes(nextUrl.pathname)) return true
+
+      // Refirect unauthenticated users to the login page
+      if (!isLoggedIn) return false
+
+      // Redirect authenticated users to the tasks page if they try to access the login page
+      if (nextUrl.pathname.startsWith("/login")) {
         return Response.redirect(new URL("/tasks", nextUrl))
       }
+
       return true
     },
   },
