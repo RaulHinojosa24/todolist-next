@@ -1,6 +1,6 @@
 "use client"
 
-import { ClipboardList, Home, LucideIcon, User } from "lucide-react"
+import { ClipboardList, Home, Info, LucideIcon, User } from "lucide-react"
 
 import {
   SidebarGroup,
@@ -36,6 +36,11 @@ const routes: {
     title: "Tasks",
     url: "/tasks",
     icon: ClipboardList,
+  },
+  {
+    title: "About",
+    url: "/about",
+    icon: Info,
   },
 ]
 
