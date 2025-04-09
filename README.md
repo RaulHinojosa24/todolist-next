@@ -22,6 +22,12 @@ The purpose of this project is to provide a practical and user-friendly task man
 - [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS framework for styling.
 - [TypeScript](https://www.typescriptlang.org/) - Typed JavaScript for better development experience.
 - [Lucide Icons](https://lucide.dev/) - Icon library for modern and customizable icons.
+- [Auth.js](https://authjs.dev/) - Authentication library for secure user management.
+
+## Security
+
+- 🔒 **Data Encryption**: All user information is encrypted before being stored, ensuring privacy and security.
+- 🔑 **Authentication**: The application uses **Auth.js** to handle user authentication securely and efficiently.
 
 ## Getting Started
 
@@ -143,6 +149,7 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 - [Tailwind CSS](https://tailwindcss.com/)
 - [TypeScript](https://www.typescriptlang.org/)
 - [Lucide Icons](https://lucide.dev/)
+- [Auth.js](https://authjs.dev/)
 
 ## Slogan
 
