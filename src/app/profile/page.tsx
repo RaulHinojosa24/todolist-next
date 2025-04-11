@@ -3,6 +3,14 @@ import ChangePassword from "@/components/profile/change-password"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import BreadcrumbUpdater from "@/components/ui/breadcrumb-updater"
 
+export async function generateMetadata() {
+  const session = await auth()
+
+  return {
+    title: session ? `${session.user.username}'s Profile` : "Profile",
+  }
+}
+
 export default async function ProfilePage() {
   const session = await auth()
 

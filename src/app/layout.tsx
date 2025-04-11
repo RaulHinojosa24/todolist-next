@@ -15,7 +15,10 @@ const interSans = Inter({
 })
 
 export const metadata: Metadata = {
-  title: "owari: task manager",
+  title: {
+    template: "%s | Owari",
+    default: "Owari Task Manager",
+  },
   creator: "Raul Hinojosa Perez",
   authors: [
     {
@@ -29,8 +32,8 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "https://owari.vercel.app",
-    siteName: "owari",
-    title: "owari: task manager",
+    siteName: "Owari",
+    title: "Owari: Task Manager",
     description:
       "Owari is a task manager application that helps you manage all your tasks easily and efficiently.",
     images: [

@@ -21,10 +21,7 @@ export async function generateMetadata(props: {
   const taskGroupData = await fetchTaskGroupInfo(id)
 
   return {
-    title:
-      "message" in taskGroupData
-        ? "owari: error"
-        : `owari: ${taskGroupData.name}`,
+    title: "message" in taskGroupData ? "Error" : `${taskGroupData.name}`,
   }
 }
 

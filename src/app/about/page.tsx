@@ -15,6 +15,11 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { BriefcaseBusiness } from "lucide-react"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "About",
+}
 
 export default function AboutPage() {
   return (
@@ -24,7 +29,7 @@ export default function AboutPage() {
       />
 
       <section className="space-y-2">
-        <h1 className="page-title">About: Owari</h1>
+        <h1 className="page-title">About</h1>
         <p className="text-lg text-center text-muted-foreground">
           This task management application is designed to help you organize your
           daily life efficiently and productively.

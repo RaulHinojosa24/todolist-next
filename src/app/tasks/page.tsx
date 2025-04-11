@@ -6,7 +6,7 @@ import { Metadata } from "next"
 import { Suspense } from "react"
 
 export const metadata: Metadata = {
-  title: "owari: my tasks",
+  title: "My Task Groups",
 }
 
 export default async function TasksPage() {
