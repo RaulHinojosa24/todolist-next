@@ -1,4 +1,4 @@
-import TodoListSkeleton from "@/components/skeletons/todo-list-skeleton"
+import TaskListSkeleton from "@/components/skeletons/task-list-skeleton"
 import { Progress } from "@/components/ui/progress"
 import { Skeleton } from "@/components/ui/skeleton"
 
@@ -10,7 +10,7 @@ export default function Loading() {
         <Skeleton className="h-6 aspect-square rounded-full" />
       </div>
       <Skeleton className="h-9 w-full" />
-      <TodoListSkeleton />
+      <TaskListSkeleton />
       <div className="w-full">
         <Skeleton className="h-4 w-28 mb-1 mx-auto" />
         <Progress value={0} />

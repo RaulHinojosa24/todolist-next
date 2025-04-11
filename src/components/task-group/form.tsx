@@ -1,43 +1,43 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { createTodoGroup, editTodoGroup, TodoGroupState } from "@/lib/actions"
+import { createTaskGroup, editTaskGroup, TaskGroupState } from "@/lib/actions"
 import { useActionState, useEffect, useState } from "react"
 import { Textarea } from "@/components/ui/textarea"
-import { TodoGroup } from "@/lib/definitions"
+import { TaskGroup } from "@/lib/definitions"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import {
-  TODO_GROUP_DESCRIPTION_MAX_LENGTH,
-  TODO_GROUP_NAME_MAX_LENGTH,
+  TASK_GROUP_DESCRIPTION_MAX_LENGTH,
+  TASK_GROUP_NAME_MAX_LENGTH,
 } from "@/lib/constants"
 import { cn } from "@/lib/utils"
 
-export default function TodoGroupForm({
+export default function TaskGroupForm({
   close,
-  todoGroup,
+  taskGroup,
 }: {
   close: () => void
-  todoGroup?: TodoGroup
+  taskGroup?: TaskGroup
 }) {
   const router = useRouter()
-  const initialState: TodoGroupState = { message: null, errors: {} }
+  const initialState: TaskGroupState = { message: null, errors: {} }
   const [state, formAction] = useActionState(
-    todoGroup ? editTodoGroup.bind(null, todoGroup.id) : createTodoGroup,
+    taskGroup ? editTaskGroup.bind(null, taskGroup.id) : createTaskGroup,
     initialState
   )
   const [formDisabled, setFormDisabled] = useState(false)
-  const [name, setName] = useState(todoGroup ? todoGroup.name : "")
+  const [name, setName] = useState(taskGroup ? taskGroup.name : "")
   const nameLength = name.trim().length
-  const isNameValid = nameLength > 0 && nameLength <= TODO_GROUP_NAME_MAX_LENGTH
+  const isNameValid = nameLength > 0 && nameLength <= TASK_GROUP_NAME_MAX_LENGTH
   const [description, setDescription] = useState(
-    todoGroup ? todoGroup.description : ""
+    taskGroup ? taskGroup.description : ""
   )
   const descriptionLength = description.trim().length
   const isDescriptionValid =
-    descriptionLength <= TODO_GROUP_DESCRIPTION_MAX_LENGTH
+    descriptionLength <= TASK_GROUP_DESCRIPTION_MAX_LENGTH
 
   useEffect(() => {
     if (!state) {
@@ -52,7 +52,7 @@ export default function TodoGroupForm({
     } else {
       setFormDisabled(false)
     }
-  }, [state, router, close, todoGroup])
+  }, [state, router, close, taskGroup])
 
   function submitHandler(e: React.FormEvent<HTMLFormElement>) {
     if (formDisabled) {
@@ -81,7 +81,7 @@ export default function TodoGroupForm({
               isNameValid ? "text-muted-foreground" : "text-destructive"
             )}
           >
-            {nameLength}/{TODO_GROUP_NAME_MAX_LENGTH}
+            {nameLength}/{TASK_GROUP_NAME_MAX_LENGTH}
           </p>
 
           {state?.errors?.name && (
@@ -104,7 +104,7 @@ export default function TodoGroupForm({
               isDescriptionValid ? "text-muted-foreground" : "text-destructive"
             )}
           >
-            {descriptionLength}/{TODO_GROUP_DESCRIPTION_MAX_LENGTH}
+            {descriptionLength}/{TASK_GROUP_DESCRIPTION_MAX_LENGTH}
           </p>
           {state?.errors?.description && (
             <p className="text-sm text-destructive">

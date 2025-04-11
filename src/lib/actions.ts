@@ -6,11 +6,11 @@ import { revalidatePath } from "next/cache"
 import { z } from "zod"
 import { auth, signIn } from "@/auth"
 import { AuthError } from "next-auth"
-import { TodoGroup } from "./definitions"
+import { TaskGroup } from "./definitions"
 import {
-  TODO_GROUP_DESCRIPTION_MAX_LENGTH,
-  TODO_GROUP_NAME_MAX_LENGTH,
-  TODO_ITEM_MAX_LENGTH,
+  TASK_GROUP_DESCRIPTION_MAX_LENGTH,
+  TASK_GROUP_NAME_MAX_LENGTH,
+  TASK_ITEM_MAX_LENGTH,
 } from "./constants"
 import { encrypt } from "./encryption"
 import bcrypt from "bcrypt"
@@ -170,121 +170,121 @@ export async function updateCustomerPassword(
   }
 }
 
-const TodoItemFormSchema = z.object({
+const TaskItemFormSchema = z.object({
   id: z.string().uuid(),
-  todoGroupId: z.string().uuid(),
+  taskGroupId: z.string().uuid(),
   completed: z.boolean(),
-  todo: z
+  task: z
     .string()
     .trim()
     .min(1, {
       message: "Oops! Looks like you forgot to enter something.",
     })
-    .max(TODO_ITEM_MAX_LENGTH, {
+    .max(TASK_ITEM_MAX_LENGTH, {
       message:
         "Oops! Your text is too long. Please keep it under 100 characters.",
     }),
   creationDate: z.string().datetime(),
 })
 
-export type TodoItemState = {
+export type TaskItemState = {
   errors?: {
-    todo?: string[]
+    task?: string[]
   }
   message?: string | null
 }
 
-// TODO ITEM
+// TASK ITEM
 
-export async function updateTodoItemCompleted(id: UUID, newCompleted: boolean) {
+export async function updateTaskItemCompleted(id: UUID, newCompleted: boolean) {
   try {
     await sql`
-      UPDATE todo_item
+      UPDATE task_item
       SET completed = ${newCompleted}
       WHERE id = ${id}
     `
   } catch (error) {
     console.error(error)
     // If a database error occurs, return a more specific error.
-    throw new Error("Database Error: Failed to Update Todo Item.")
+    throw new Error("Database Error: Failed to Update Task Item.")
   }
 
   revalidatePath("/")
 }
 
-const CreateTodo = TodoItemFormSchema.omit({
+const CreateTask = TaskItemFormSchema.omit({
   id: true,
-  todoGroupId: true,
+  taskGroupId: true,
   completed: true,
   creationDate: true,
 })
 
-export async function createTodoItem(
-  todoGroupId: UUID,
-  prevState: TodoItemState | undefined,
+export async function createTaskItem(
+  taskGroupId: UUID,
+  prevState: TaskItemState | undefined,
   formData: FormData
 ) {
-  const validatedFields = CreateTodo.safeParse({
-    todo: formData.get("todo"),
+  const validatedFields = CreateTask.safeParse({
+    task: formData.get("task"),
   })
 
   if (!validatedFields.success) {
     return {
       errors: validatedFields.error.flatten().fieldErrors,
-      message: "Missing Fields. Failed to Create Todo Item.",
+      message: "Missing Fields. Failed to Create Task Item.",
     }
   }
 
-  const { todo } = validatedFields.data
-  const encryptedTodo = encrypt(todo)
+  const { task } = validatedFields.data
+  const encryptedTask = encrypt(task)
 
   try {
     await sql`
-      INSERT INTO todo_item (text, todo_group_id)
-      VALUES (${encryptedTodo}, ${todoGroupId})
+      INSERT INTO task_item (text, task_group_id)
+      VALUES (${encryptedTask}, ${taskGroupId})
     `
   } catch (error) {
     console.error(error)
     // If a database error occurs, return a more specific error.
     return {
       errors: {},
-      message: "Database Error: Failed to Create Todo Item.",
+      message: "Database Error: Failed to Create Task Item.",
     }
   }
 
   revalidatePath("/")
 }
 
-const EditTodo = TodoItemFormSchema.omit({
-  todoGroupId: true,
+const EditTask = TaskItemFormSchema.omit({
+  taskGroupId: true,
   completed: true,
   creationDate: true,
 })
 
-export async function editTodoItem(
+export async function editTaskItem(
   rawId: UUID,
-  prevState: TodoItemState | undefined,
+  prevState: TaskItemState | undefined,
   formData: FormData
 ) {
-  const validatedFields = EditTodo.safeParse({
+  const validatedFields = EditTask.safeParse({
     id: rawId,
-    todo: formData.get("todo"),
+    task: formData.get("task"),
   })
 
   if (!validatedFields.success) {
     return {
       errors: validatedFields.error.flatten().fieldErrors,
-      message: "Missing Fields. Failed to Update Todo Item.",
+      message: "Missing Fields. Failed to Update Task Item.",
     }
   }
 
-  const { id, todo } = validatedFields.data
-  const encryptedTodo = encrypt(todo)
+  const { id, task } = validatedFields.data
+  const encryptedTask = encrypt(task)
 
   try {
     await sql`
-      UPDATE todo_item
-      SET text = ${encryptedTodo}
+      UPDATE task_item
+      SET text = ${encryptedTask}
       WHERE id = ${id}
     `
   } catch (error) {
@@ -292,17 +292,17 @@ export async function editTodoItem(
     // If a database error occurs, return a more specific error.
     return {
       errors: {},
-      message: "Database Error: Failed to Update Todo Item.",
+      message: "Database Error: Failed to Update Task Item.",
     }
   }
 
   revalidatePath("/")
 }
 
-export async function deleteTodoItem(id: UUID) {
+export async function deleteTaskItem(id: UUID) {
   try {
     await sql`
-      DELETE FROM todo_item
+      DELETE FROM task_item
       WHERE id = ${id};
     `
   } catch (error) {
@@ -314,9 +314,9 @@ export async function deleteTodoItem(id: UUID) {
   revalidatePath("/")
 }
 
-// TODO GROUP
+// TASK GROUP
 
-const TodoGroupFormSchema = z.object({
+const TaskGroupFormSchema = z.object({
   id: z.string().uuid(),
   customerId: z.string().uuid(),
   name: z
@@ -325,18 +325,18 @@ const TodoGroupFormSchema = z.object({
     .min(1, {
       message: "Oops! Looks like you forgot to enter something.",
     })
-    .max(TODO_GROUP_NAME_MAX_LENGTH, {
+    .max(TASK_GROUP_NAME_MAX_LENGTH, {
       message:
         "Oops! Group name is too long. Please keep it under 50 characters.",
     }),
-  description: z.string().trim().max(TODO_GROUP_DESCRIPTION_MAX_LENGTH, {
+  description: z.string().trim().max(TASK_GROUP_DESCRIPTION_MAX_LENGTH, {
     message:
       "Oops! Your description is too long. Please keep it under 200 characters.",
   }),
   creationDate: z.string().datetime(),
 })
 
-export type TodoGroupState = {
+export type TaskGroupState = {
   errors?: {
     name?: string[]
     description?: string[]
@@ -345,17 +345,17 @@ export type TodoGroupState = {
   id?: UUID
 }
 
-const CreateTodoGroup = TodoGroupFormSchema.omit({
+const CreateTaskGroup = TaskGroupFormSchema.omit({
   id: true,
   customerId: true,
   creationDate: true,
 })
 
-export async function createTodoGroup(
-  prevState: TodoGroupState | undefined,
+export async function createTaskGroup(
+  prevState: TaskGroupState | undefined,
   formData: FormData
 ) {
-  const validatedFields = CreateTodoGroup.safeParse({
+  const validatedFields = CreateTaskGroup.safeParse({
     name: formData.get("name"),
     description: formData.get("description"),
   })
@@ -374,8 +374,8 @@ export async function createTodoGroup(
   try {
     const session = await auth()
 
-    const { rows } = await sql<TodoGroup>`
-      INSERT INTO todo_group (name, description, customer_id)
+    const { rows } = await sql<TaskGroup>`
+      INSERT INTO task_group (name, description, customer_id)
       VALUES (${encryptedName}, ${encryptedDescription}, ${session?.user?.id})
       RETURNING id
     `
@@ -390,17 +390,17 @@ export async function createTodoGroup(
   }
 }
 
-const EditTodoGroup = TodoGroupFormSchema.omit({
+const EditTaskGroup = TaskGroupFormSchema.omit({
   creationDate: true,
   customerId: true,
 })
 
-export async function editTodoGroup(
+export async function editTaskGroup(
   rawId: UUID,
-  prevState: TodoGroupState | undefined,
+  prevState: TaskGroupState | undefined,
   formData: FormData
 ) {
-  const validatedFields = EditTodoGroup.safeParse({
+  const validatedFields = EditTaskGroup.safeParse({
     id: rawId,
     name: formData.get("name"),
     description: formData.get("description"),
@@ -419,7 +419,7 @@ export async function editTodoGroup(
 
   try {
     await sql`
-      UPDATE todo_group
+      UPDATE task_group
       SET name = ${encryptedName}, description = ${encryptedDescription}
       WHERE id = ${id}
     `
@@ -435,10 +435,10 @@ export async function editTodoGroup(
   revalidatePath("/tasks")
 }
 
-export async function deleteTodoGroup(id: UUID) {
+export async function deleteTaskGroup(id: UUID) {
   try {
     await sql`
-      DELETE FROM todo_group
+      DELETE FROM task_group
       WHERE id = ${id};
     `
   } catch (error) {

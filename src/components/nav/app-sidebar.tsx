@@ -9,10 +9,10 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar"
-import { fetchTodoGroups } from "@/lib/data"
+import { fetchTaskGroups } from "@/lib/data"
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const tasks = fetchTodoGroups()
+  const tasks = fetchTaskGroups()
 
   return (
     <Sidebar collapsible="icon" {...props}>

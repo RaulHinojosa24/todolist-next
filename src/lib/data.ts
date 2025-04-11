@@ -1,5 +1,5 @@
 import { sql } from "@vercel/postgres"
-import type { TodoGroupCounts, TodoItem } from "./definitions"
+import type { TaskGroupCounts, TaskItem } from "./definitions"
 import { auth } from "@/auth"
 import { UUID } from "crypto"
 import { z } from "zod"
@@ -7,10 +7,10 @@ import { decrypt } from "./encryption"
 
 const zUUID = z.string().uuid()
 
-export async function fetchTodoGroupInfo(todoGroupId: UUID) {
+export async function fetchTaskGroupInfo(taskGroupId: UUID) {
   const session = await auth()
 
-  const validatedId = zUUID.safeParse(todoGroupId)
+  const validatedId = zUUID.safeParse(taskGroupId)
 
   if (!validatedId.success) {
     return {
@@ -19,14 +19,14 @@ export async function fetchTodoGroupInfo(todoGroupId: UUID) {
   }
 
   try {
-    const { rows } = await sql<TodoGroupCounts>`
+    const { rows } = await sql<TaskGroupCounts>`
     SELECT tg.*, 
       COUNT(ti.id) as total_count,
       COUNT(CASE WHEN ti.completed THEN 1 END) as completed_count,
       COUNT(CASE WHEN ti.completed THEN NULL ELSE 1 END) as incomplete_count
-    FROM todo_group tg
-    LEFT JOIN todo_item ti ON tg.id = ti.todo_group_id
-    WHERE tg.id = ${todoGroupId}
+    FROM task_group tg
+    LEFT JOIN task_item ti ON tg.id = ti.task_group_id
+    WHERE tg.id = ${taskGroupId}
     AND tg.customer_id = ${session?.user?.id}
     GROUP BY tg.id`
 
@@ -51,7 +51,7 @@ export async function fetchTodoGroupInfo(todoGroupId: UUID) {
   }
 }
 
-export async function fetchTodoGroups() {
+export async function fetchTaskGroups() {
   const session = await auth()
 
   if (!session?.user?.id) {
@@ -61,12 +61,12 @@ export async function fetchTodoGroups() {
   }
 
   try {
-    const data = await sql<TodoGroupCounts>`
+    const data = await sql<TaskGroupCounts>`
       SELECT tg.*, 
        COUNT(ti.id) as total_count,
        COUNT(CASE WHEN ti.completed THEN 1 END) as completed_count
-      FROM todo_group tg
-      LEFT JOIN todo_item ti ON tg.id = ti.todo_group_id
+      FROM task_group tg
+      LEFT JOIN task_item ti ON tg.id = ti.task_group_id
       WHERE tg.customer_id = ${session?.user?.id}
       GROUP BY tg.id
       ORDER BY tg.name
@@ -87,8 +87,8 @@ export async function fetchTodoGroups() {
   }
 }
 
-export async function fetchTodoItems(todoGroupId: UUID) {
-  const validatedId = zUUID.safeParse(todoGroupId)
+export async function fetchTaskItems(taskGroupId: UUID) {
+  const validatedId = zUUID.safeParse(taskGroupId)
 
   if (!validatedId.success) {
     return {
@@ -97,10 +97,10 @@ export async function fetchTodoItems(todoGroupId: UUID) {
   }
 
   try {
-    const data = await sql<TodoItem>`
+    const data = await sql<TaskItem>`
         SELECT *
-        FROM todo_item
-        WHERE todo_group_id = ${todoGroupId}
+        FROM task_item
+        WHERE task_group_id = ${taskGroupId}
         ORDER BY completed, creation_date DESC`
 
     const decryptedData = data.rows.map((item) => ({

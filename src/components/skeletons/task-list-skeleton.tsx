@@ -1,6 +1,6 @@
 import { Skeleton } from "@/components/ui/skeleton"
 
-export default function TodoListSkeleton() {
+export default function TaskListSkeleton() {
   return (
     <ul className="w-full grow">
       {Array(3)

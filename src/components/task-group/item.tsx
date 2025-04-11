@@ -6,7 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { TodoGroupCounts } from "@/lib/definitions"
+import { TaskGroupCounts } from "@/lib/definitions"
 import Link from "next/link"
 import {
   DropdownMenu,
@@ -16,21 +16,21 @@ import {
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu"
 import { Button } from "@/components/ui/button"
-import EditTodoGroup from "./edit"
+import EditTaskGroup from "./edit"
 import {
   SidebarMenuAction,
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 import { Folder, Info, MoreHorizontal, MoreVertical } from "lucide-react"
-import DeleteTodoGroup from "./delete"
+import DeleteTaskGroup from "./delete"
 import { usePathname } from "next/navigation"
 
-export default function TodoGroupItem({
+export default function TaskGroupItem({
   item,
   isSidebar = false,
 }: {
-  item: TodoGroupCounts
+  item: TaskGroupCounts
   isSidebar?: boolean
 }) {
   const { id, name, description, completed_count, total_count } = item
@@ -68,11 +68,11 @@ export default function TodoGroupItem({
                 <span>Info</span>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <EditTodoGroup todoGroup={item} />
+                <EditTaskGroup taskGroup={item} />
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem asChild>
-                <DeleteTodoGroup id={id} />
+                <DeleteTaskGroup id={id} />
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -100,11 +100,11 @@ export default function TodoGroupItem({
                   </DropdownMenuTrigger>
                   <DropdownMenuContent>
                     <DropdownMenuItem asChild>
-                      <EditTodoGroup todoGroup={item} />
+                      <EditTaskGroup taskGroup={item} />
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem asChild>
-                      <DeleteTodoGroup id={id} />
+                      <DeleteTaskGroup id={id} />
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>

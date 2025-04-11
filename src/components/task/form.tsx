@@ -1,33 +1,33 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { createTodoItem, editTodoItem, TodoItemState } from "@/lib/actions"
+import { createTaskItem, editTaskItem, TaskItemState } from "@/lib/actions"
 import { useActionState, useEffect, useState } from "react"
-import { TodoItem } from "@/lib/definitions"
+import { TaskItem } from "@/lib/definitions"
 import { UUID } from "crypto"
 import { toast } from "sonner"
 import { Input } from "@/components/ui/input"
-import { TODO_ITEM_MAX_LENGTH } from "@/lib/constants"
+import { TASK_ITEM_MAX_LENGTH } from "@/lib/constants"
 
-export default function TodoForm({
+export default function TaskForm({
   close,
   data,
 }: {
   close: () => void
-  data: TodoItem | UUID
+  data: TaskItem | UUID
 }) {
   const isCreation = typeof data === "string"
-  const initialState: TodoItemState = { message: null, errors: {} }
+  const initialState: TaskItemState = { message: null, errors: {} }
   const [formDisabled, setFormDisabled] = useState(false)
   const [state, formAction] = useActionState(
     isCreation
-      ? createTodoItem.bind(null, data)
-      : editTodoItem.bind(null, data.id),
+      ? createTaskItem.bind(null, data)
+      : editTaskItem.bind(null, data.id),
     initialState
   )
   const [text, setText] = useState(isCreation ? "" : data.text)
   const textLength = text.trim().length
-  const isTextValid = textLength > 0 && textLength <= TODO_ITEM_MAX_LENGTH
+  const isTextValid = textLength > 0 && textLength <= TASK_ITEM_MAX_LENGTH
 
   useEffect(() => {
     if (!state) {
@@ -50,7 +50,7 @@ export default function TodoForm({
     <form onSubmit={submitHandler} action={formAction} className="space-y-4">
       <div>
         <Input
-          name="todo"
+          name="task"
           value={text}
           onChange={(e) => setText(e.target.value)}
           required
@@ -62,10 +62,10 @@ export default function TodoForm({
               isTextValid ? "text-muted-foreground" : "text-destructive"
             }
           >
-            {textLength}/{TODO_ITEM_MAX_LENGTH}
+            {textLength}/{TASK_ITEM_MAX_LENGTH}
           </p>
-          {state?.errors?.todo && (
-            <p className="text-sm text-destructive">{state.errors.todo}</p>
+          {state?.errors?.task && (
+            <p className="text-sm text-destructive">{state.errors.task}</p>
           )}
         </div>
       </div>

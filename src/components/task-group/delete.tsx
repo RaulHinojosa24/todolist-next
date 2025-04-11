@@ -9,27 +9,29 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
-import { deleteTodoItem } from "@/lib/actions"
+import { deleteTaskGroup } from "@/lib/actions"
 import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
-import { UUID } from "crypto"
 import { Trash2 } from "lucide-react"
+import { UUID } from "crypto"
+import { useRouter } from "next/navigation"
 
-export default function DeleteTodoItem({ id }: { id: UUID }) {
-  async function deleteHandler() {
-    const res = deleteTodoItem.bind(null, id)()
+export default function DeleteTaskGroup({ id }: { id: UUID }) {
+  const router = useRouter()
+  function deleteHandler() {
+    const res = deleteTaskGroup.bind(null, id)()
 
     toast.promise(res, {
       loading: "Loading...",
       success: () => {
-        return `Task has been deleted.`
+        router.push("/tasks")
+        return `Task group has been deleted.`
       },
       error: (error) => {
         return error.message
       },
     })
   }
-
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -42,7 +44,7 @@ export default function DeleteTodoItem({ id }: { id: UUID }) {
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription>
-            This will permanently delete that task.
+            This will permanently delete that task group.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

@@ -3,18 +3,18 @@
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogDescription,
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
 import { useCallback, useState } from "react"
-import TodoGroupForm from "./form"
-import { TodoGroup } from "@/lib/definitions"
+import TaskForm from "./form"
+import { TaskItem } from "@/lib/definitions"
 import { Edit } from "lucide-react"
 
-export default function EditTodoGroup({ todoGroup }: { todoGroup: TodoGroup }) {
+export default function EditTask({ task }: { task: TaskItem }) {
   const [open, setOpen] = useState(false)
 
   const handleClose = useCallback(() => {
@@ -24,19 +24,17 @@ export default function EditTodoGroup({ todoGroup }: { todoGroup: TodoGroup }) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button role="menuitem" variant={"ghost"} size={"dropdown"}>
-          <Edit className="text-muted-foreground" />
+        <Button variant={"ghost"} size={"dropdown"}>
+          <Edit />
           <span>Edit</span>
         </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader className="mb-2">
-          <DialogTitle>Editing Task Group</DialogTitle>
-          <DialogDescription>
-            What kind of tasks are you planning to do?
-          </DialogDescription>
+          <DialogTitle>Editing Task</DialogTitle>
+          <DialogDescription>What would you like to achieve?</DialogDescription>
         </DialogHeader>
-        <TodoGroupForm close={handleClose} todoGroup={todoGroup} />
+        <TaskForm close={handleClose} data={task} />
       </DialogContent>
     </Dialog>
   )

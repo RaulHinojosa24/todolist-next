@@ -3,8 +3,8 @@
 import { Checkbox } from "@/components/ui/checkbox"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
-import { updateTodoItemCompleted } from "@/lib/actions"
-import type { TodoItem } from "@/lib/definitions"
+import { updateTaskItemCompleted } from "@/lib/actions"
+import type { TaskItem } from "@/lib/definitions"
 import { useState } from "react"
 import { toast } from "sonner"
 import {
@@ -14,11 +14,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import EditTodo from "./edit"
+import EditTask from "./edit"
 import { MoreVertical } from "lucide-react"
-import DeleteTodoItem from "./delete"
+import DeleteTaskItem from "./delete"
 
-export default function TodoItem({ item }: { item: TodoItem }) {
+export default function TaskItem({ item }: { item: TaskItem }) {
   const { id, text, completed } = item
 
   const [isChecked, setIsChecked] = useState(completed)
@@ -29,7 +29,7 @@ export default function TodoItem({ item }: { item: TodoItem }) {
     setIsChecked(newChecked)
     setIsDisabled(true)
 
-    const res = updateTodoItemCompleted.bind(null, id, newChecked)()
+    const res = updateTaskItemCompleted.bind(null, id, newChecked)()
 
     toast.promise(res, {
       loading: "Loading...",
@@ -70,11 +70,11 @@ export default function TodoItem({ item }: { item: TodoItem }) {
         </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuItem asChild>
-            <EditTodo todo={item} />
+            <EditTask task={item} />
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem asChild>
-            <DeleteTodoItem id={id} />
+            <DeleteTaskItem id={id} />
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

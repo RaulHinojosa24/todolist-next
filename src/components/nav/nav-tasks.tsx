@@ -6,16 +6,16 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 import { Suspense } from "react"
-import { TodoGroupCounts } from "@/lib/definitions"
-import TodoGroupItem from "@/components/todo-group/item"
-import NewTodoGroup from "@/components/todo-group/new"
+import { TaskGroupCounts } from "@/lib/definitions"
+import TaskGroupItem from "@/components/task-group/item"
+import NewTaskGroup from "@/components/task-group/new"
 import { auth } from "@/auth"
 
 export default async function NavTasks({
   tasks,
 }: {
   tasks: Promise<
-    | TodoGroupCounts[]
+    | TaskGroupCounts[]
     | {
         message: string
       }
@@ -45,7 +45,7 @@ export default async function NavTasks({
             </Suspense>
             <SidebarMenuItem>
               <SidebarMenuButton asChild>
-                <NewTodoGroup isSidebar />
+                <NewTaskGroup isSidebar />
               </SidebarMenuButton>
             </SidebarMenuItem>
           </>
@@ -65,7 +65,7 @@ async function NavAsyncTasks({
   tasks,
 }: {
   tasks: Promise<
-    | TodoGroupCounts[]
+    | TaskGroupCounts[]
     | {
         message: string
       }
@@ -77,7 +77,7 @@ async function NavAsyncTasks({
     <>
       {Array.isArray(fetchedTasks) ? (
         fetchedTasks.map((task) => (
-          <TodoGroupItem key={task.id} item={task} isSidebar />
+          <TaskGroupItem key={task.id} item={task} isSidebar />
         ))
       ) : (
         <SidebarMenuItem>

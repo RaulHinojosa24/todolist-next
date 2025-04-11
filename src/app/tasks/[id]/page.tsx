@@ -1,9 +1,9 @@
 import { notFound } from "next/navigation"
-import TodoListSkeleton from "@/components/skeletons/todo-list-skeleton"
-import TodoList from "@/components/todo/list"
-import NewTodo from "@/components/todo/new"
+import TaskListSkeleton from "@/components/skeletons/task-list-skeleton"
+import TaskList from "@/components/task/list"
+import NewTask from "@/components/task/new"
 import { Progress } from "@/components/ui/progress"
-import { fetchTodoGroupInfo } from "@/lib/data"
+import { fetchTaskGroupInfo } from "@/lib/data"
 import { UUID } from "crypto"
 import { Suspense } from "react"
 import {
@@ -18,23 +18,23 @@ export async function generateMetadata(props: {
   params: Promise<{ id: UUID }>
 }) {
   const { id } = await props.params
-  const todoGroupData = await fetchTodoGroupInfo(id)
+  const taskGroupData = await fetchTaskGroupInfo(id)
 
   return {
     title:
-      "message" in todoGroupData
+      "message" in taskGroupData
         ? "owari: error"
-        : `owari: ${todoGroupData.name}`,
+        : `owari: ${taskGroupData.name}`,
   }
 }
 
-export default async function TodoGroupPage(props: {
+export default async function TaskGroupPage(props: {
   params: Promise<{ id: UUID }>
 }) {
   const { id } = await props.params
-  const todoGroupData = await fetchTodoGroupInfo(id)
+  const taskGroupData = await fetchTaskGroupInfo(id)
 
-  if (!("id" in todoGroupData)) {
+  if (!("id" in taskGroupData)) {
     notFound()
   }
 
@@ -46,38 +46,38 @@ export default async function TodoGroupPage(props: {
         items={[
           { href: "/", label: "Home" },
           { href: "/tasks", label: "Tasks" },
-          { label: todoGroupData.name },
+          { label: taskGroupData.name },
         ]}
       />
       <div className="page-title justify-center">
         <h1>
-          {todoGroupData.name}
+          {taskGroupData.name}
           <HoverCard>
             <HoverCardTrigger className="inline-flex ml-2">
               <Info />
             </HoverCardTrigger>
             <HoverCardContent className="text-sm font-normal">
-              {todoGroupData.description
-                ? todoGroupData.description
+              {taskGroupData.description
+                ? taskGroupData.description
                 : "No description"}
             </HoverCardContent>
           </HoverCard>
         </h1>
       </div>
-      <NewTodo todoGroupId={id} />
+      <NewTask taskGroupId={id} />
       <div className="grow">
-        <Suspense fallback={<TodoListSkeleton />}>
-          <TodoList todoGroupId={id} />
+        <Suspense fallback={<TaskListSkeleton />}>
+          <TaskList taskGroupId={id} />
         </Suspense>
       </div>
       <div>
         <p className="text-sm text-muted-foreground text-center mb-1">
-          {todoGroupData.completed_count} of {todoGroupData.total_count}{" "}
+          {taskGroupData.completed_count} of {taskGroupData.total_count}{" "}
           completed
         </p>
         <Progress
           value={
-            (todoGroupData.completed_count * 100) / todoGroupData.total_count
+            (taskGroupData.completed_count * 100) / taskGroupData.total_count
           }
         />
       </div>

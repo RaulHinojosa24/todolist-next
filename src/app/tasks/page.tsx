@@ -1,6 +1,6 @@
-import TodoGroupListSkeleton from "@/components/skeletons/todo-group-list-skeleton"
-import TodoGroupList from "@/components/todo-group/list"
-import NewTodoGroup from "@/components/todo-group/new"
+import TaskGroupListSkeleton from "@/components/skeletons/task-group-list-skeleton"
+import TaskGroupList from "@/components/task-group/list"
+import NewTaskGroup from "@/components/task-group/new"
 import BreadcrumbUpdater from "@/components/ui/breadcrumb-updater"
 import { Metadata } from "next"
 import { Suspense } from "react"
@@ -17,10 +17,10 @@ export default async function TasksPage() {
       />
 
       <h1 className="page-title">My Task Groups</h1>
-      <NewTodoGroup />
+      <NewTaskGroup />
       <div className="grow">
-        <Suspense fallback={<TodoGroupListSkeleton />}>
-          <TodoGroupList />
+        <Suspense fallback={<TaskGroupListSkeleton />}>
+          <TaskGroupList />
         </Suspense>
       </div>
     </>

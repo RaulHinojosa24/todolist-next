@@ -3,17 +3,18 @@
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogDescription,
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
 import { useCallback, useState } from "react"
-import TodoGroupForm from "./form"
+import TaskForm from "./form"
+import { UUID } from "crypto"
 import { Plus } from "lucide-react"
 
-export default function NewTodoGroup({ isSidebar }: { isSidebar?: boolean }) {
+export default function NewTask({ taskGroupId }: { taskGroupId: UUID }) {
   const [open, setOpen] = useState(false)
 
   const handleClose = useCallback(() => {
@@ -23,19 +24,17 @@ export default function NewTodoGroup({ isSidebar }: { isSidebar?: boolean }) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="w-full" size={isSidebar ? "dropdown" : "default"}>
+        <Button className="w-full">
           <Plus />
-          <span>new task group</span>
+          <span>new task</span>
         </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader className="mb-2">
-          <DialogTitle>Creating a New Task Group</DialogTitle>
-          <DialogDescription>
-            What kind of tasks are you planning to do?
-          </DialogDescription>
+          <DialogTitle>Creating a New Task</DialogTitle>
+          <DialogDescription>What would you like to achieve?</DialogDescription>
         </DialogHeader>
-        <TodoGroupForm close={handleClose} />
+        <TaskForm close={handleClose} data={taskGroupId} />
       </DialogContent>
     </Dialog>
   )

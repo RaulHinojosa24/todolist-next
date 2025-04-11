@@ -1,21 +1,21 @@
 import { UUID } from "crypto"
 
-export type TodoGroup = {
+export type TaskGroup = {
   id: UUID
   name: string
   description: string
   customer_id: UUID
 }
 
-export type TodoGroupCounts = TodoGroup & {
+export type TaskGroupCounts = TaskGroup & {
   completed_count: number
   total_count: number
 }
 
-export type TodoItem = {
+export type TaskItem = {
   id: UUID
   text: string
-  todo_group_id: UUID
+  task_group_id: UUID
   completed: boolean
   creation_date: Date
 }
