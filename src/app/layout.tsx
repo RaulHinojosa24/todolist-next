@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/react"
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import "./globals.css"
@@ -54,6 +55,7 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-title" content="Owari" />
       </head>
       <body className={`${interSans.className} antialiased`}>
+        <Analytics />
         <SidebarProvider>
           <TooltipProvider>
             <ThemeProvider
